@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 @Data
 @AllArgsConstructor
@@ -14,7 +13,6 @@ public class Rate {
 
     @Override
     public String toString() {
-        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern(Reference.DATE_PATTERN);
-        return dateFormatter.format(date).toUpperCase() + " " + value;
+        return Reference.dateFormatter.format(date).toUpperCase() + " " + value;
     }
 }

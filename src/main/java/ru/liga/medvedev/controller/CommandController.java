@@ -11,7 +11,6 @@ import ru.liga.medvedev.services.impl.InConsoleServiceImpl;
 @Data
 @Component("CommandController")
 public class CommandController implements Command {
-    private Commands inCommands;
     private final CommandService commandService;
 
     @Autowired
@@ -20,7 +19,7 @@ public class CommandController implements Command {
     }
 
     @Override
-    public void getCommand() {
-        inCommands = commandService.getCommands();
+    public Commands getCommand() {
+        return commandService.getCommands();
     }
 }

@@ -5,5 +5,5 @@ import ru.liga.medvedev.domain.Rate;
 import java.util.List;
 
 public interface OutRateStatistic {
-    void getOutData(String period, List<Rate> listRates);
+    void outRateStatistic(String period, List<Rate> listRates);
 }

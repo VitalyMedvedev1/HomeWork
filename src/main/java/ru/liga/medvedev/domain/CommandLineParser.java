@@ -24,7 +24,7 @@ public class CommandLineParser {
             return false;
         }
         String period = commandLineParts[2];
-        if (!isInEnum(period, RatePeriod.class)) {
+        if (!isInEnum(period.toUpperCase(), RatePeriod.class)) {
             commands.setErrorMessage("Формат периода week/tomorrow, попробуйте ввести снова");
             return false;
         }

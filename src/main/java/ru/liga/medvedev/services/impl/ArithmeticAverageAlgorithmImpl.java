@@ -14,6 +14,7 @@ import ru.liga.medvedev.services.RateAlgorithmService;
 
 import java.time.LocalDate;
 import java.util.Comparator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -23,9 +24,9 @@ public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
     private final DataRepository dataRepository;
     private final RateDataMapper rateDataMapper;
     private final OutRateStatistic outRateStatistic;
-    private List<Rate> listRate;
     private LocalDate DATE_NOW_PLUS_WEEK = LocalDate.now().plusDays(7);
     private int PRECISION = 2;
+    private final int COLLECTION_SIZE = 7;
 
     @Autowired
     public ArithmeticAverageAlgorithmImpl(@Qualifier("DataRepositoryController") DataRepository dataRepository,
@@ -39,18 +40,15 @@ public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
     @Override
     public void generateStatisticRateCurrency(Commands commands) {
         List<List<String>> dataStatisticList = dataRepository.getRateDataRepository(commands.getCurrency());
-        listRate = rateDataMapper.mapRate(dataStatisticList);
-
-        listRate = listRate.stream()
+        List<Rate> listRate = rateDataMapper.mapRate(dataStatisticList).stream()
                 .sorted(Comparator.comparing(Rate::getDate).reversed())
-                .limit(7)
-                .collect(Collectors.toList());
-        getLastWeekStatistic(listRate);
-
-        outRateStatistic.getOutData(commands.getPeriod(), listRate);
+                .limit(COLLECTION_SIZE)
+                .collect(Collectors.toCollection(LinkedList::new));
+        lastWeekStatistic(listRate);
+        outRateStatistic.outRateStatistic(commands.getPeriod(), listRate);
     }
 
-    private void getLastWeekStatistic(List<Rate> listRate) {
+    private void lastWeekStatistic(List<Rate> listRate) {
         while (!listRate.get(0).getDate().equals(DATE_NOW_PLUS_WEEK)) {
             Double avgCurs = listRate.stream()
                     .mapToDouble(rate -> rate.getValue())

@@ -12,7 +12,7 @@ public class OutConsoleServiceImpl implements OutRateStatistic {
     private static final String TOMORROW = String.valueOf(RatePeriod.TOMORROW);
 
     @Override
-    public void getOutData(String period, List<Rate> listRates) {
+    public void outRateStatistic(String period, List<Rate> listRates) {
         if (TOMORROW.equals(period.toUpperCase())) {
             System.out.println(listRates.get(0).toString());
         } else {

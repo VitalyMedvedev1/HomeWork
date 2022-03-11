@@ -18,7 +18,7 @@ public class OutRateStatisticController implements OutRateStatistic {
     }
 
     @Override
-    public void getOutData(String period, List<Rate> listRates) {
-        outRateStatistic.getOutData(period, listRates);
+    public void outRateStatistic(String period, List<Rate> listRates) {
+        outRateStatistic.outRateStatistic(period, listRates);
     }
 }

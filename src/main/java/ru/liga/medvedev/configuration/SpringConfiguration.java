@@ -9,5 +9,3 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("classpath:resource.properties")
 public class SpringConfiguration {
 }
-
-

@@ -5,6 +5,6 @@ import ru.liga.medvedev.domain.Rate;
 
 import java.util.List;
 
-public interface OutRateStatistic {
-    String outRateStatistic(Commands commands, List<Rate> listRates);
+public interface AlgorithmsRate {
+    List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Commands commands);
 }

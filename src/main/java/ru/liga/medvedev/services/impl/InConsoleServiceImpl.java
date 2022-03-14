@@ -3,6 +3,7 @@ package ru.liga.medvedev.services.impl;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.CommandLineParser;
 import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.services.CommandService;
 
 import java.util.Scanner;
@@ -12,8 +13,7 @@ public class InConsoleServiceImpl implements CommandService {
 
     private static final String MENU = "Ведите входные данные для прогноза курса валют, в формате: 'курс валюта период'. Для выхода введите 'exit'";
     private static final String EXIT = "exit";
-    private static final CommandLineParser commandLineParser = new CommandLineParser();
-    private static Commands commands = new Commands();
+//    public static final CommandLineParser COMMAND_LINE_PARSER = new CommandLineParser();
 
 
     @Override
@@ -23,7 +23,7 @@ public class InConsoleServiceImpl implements CommandService {
             while (true) {
                 String inputConsoleCommand = scanner.nextLine();
                 if (!inputConsoleCommand.equals(EXIT)) {
-                    commands = commandLineParser.parse(inputConsoleCommand);
+                    Commands commands = Reference.COMMAND_LINE_PARSER.parse(inputConsoleCommand);
                     if (commands.isValidationFlg()) {
                         return commands;
                     } else {
@@ -35,5 +35,10 @@ public class InConsoleServiceImpl implements CommandService {
                 }
             }
         }
+    }
+
+    @Override
+    public Commands getCommands(String text) {
+        throw new UnsupportedOperationException();
     }
 }

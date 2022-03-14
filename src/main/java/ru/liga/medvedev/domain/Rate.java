@@ -13,6 +13,6 @@ public class Rate {
 
     @Override
     public String toString() {
-        return Reference.dateFormatter.format(date).toUpperCase() + " " + value;
+        return Reference.DATE_FORMATTER.format(date).toUpperCase() + " " + value;
     }
 }

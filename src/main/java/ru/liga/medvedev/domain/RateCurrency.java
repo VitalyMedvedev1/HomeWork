@@ -1,5 +1,5 @@
 package ru.liga.medvedev.domain;
 
 public enum RateCurrency {
-    TRY, USD, EUR
+    TRY, USD, EUR, BGN, AMD
 }

@@ -4,4 +4,5 @@ import ru.liga.medvedev.domain.Commands;
 
 public interface CommandService {
     Commands getCommands();
+    Commands getCommands(String text);
 }

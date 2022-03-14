@@ -1,7 +1,7 @@
 package ru.liga.medvedev.repository;
 
 import org.springframework.stereotype.Component;
-import ru.liga.medvedev.controller.DataRepository;
+import ru.liga.medvedev.controller.DataRateRepository;
 import ru.liga.medvedev.domain.Reference;
 
 import java.io.BufferedReader;
@@ -9,14 +9,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.net.URL;
-import java.sql.Ref;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Component("LocalRepository")
-public class FileSystemCsvRepositoryImpl implements DataRepository, CsvRepository {
+public class FileSystemCsvRateRepositoryImpl implements DataRateRepository, CsvRepository {
 
     private static final String DELIMITER = ";";
     private static final String EXTENSION = ".csv";
@@ -29,10 +28,9 @@ public class FileSystemCsvRepositoryImpl implements DataRepository, CsvRepositor
     @Override
     public List<List<String>> ReadLocalCsv(String currency) {
         ClassLoader classLoader = getClass().getClassLoader();
-        URL url = classLoader.getResource(currency + EXTENSION);
+        URL url = classLoader.getResource(currency + "_NEW" + EXTENSION);//!!!!!!!!!!!!!!!!!!!!!!!!!
         if (url == null) {
-            System.out.println("Файл не найден");
-            throw new RuntimeException();
+            throw new RuntimeException("Файл не найден");
         }
         List<List<String>> result = new ArrayList<>();
         List<String> fileContent = readFile(url);

@@ -16,4 +16,5 @@ public class Commands {
     private boolean validationFlg;
     private String errorMessage;
     private LocalDate localDate;
+    private String algorithmName;
 }

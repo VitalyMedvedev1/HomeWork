@@ -1,30 +1,28 @@
 package ru.liga.medvedev.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Enum.RateAlgorithms;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.services.RateAlgorithmService;
+import ru.liga.medvedev.services.impl.ActualAlgorithmImpl;
+import ru.liga.medvedev.services.impl.ArithmeticAverageAlgorithmImpl;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Component("AlgorithmsController")
-@PropertySource("classpath:resource.properties")
 public class AlgorithmsRateController implements AlgorithmsRate {
 
-    private RateAlgorithmService rateAlgorithmService;
+    private HashMap<String, RateAlgorithmService> algorithmServiceHashMap = new HashMap<>();
 
-    @Autowired
-    public AlgorithmsRateController(@Qualifier("ActualAlgorithm") RateAlgorithmService rateAlgorithmService) {
-        this.rateAlgorithmService = rateAlgorithmService;
+    public AlgorithmsRateController() {
+        this.algorithmServiceHashMap.put(RateAlgorithms.AVERAGE.name(), new ArithmeticAverageAlgorithmImpl());
+        this.algorithmServiceHashMap.put(RateAlgorithms.ACTUAL.name(), new ActualAlgorithmImpl());
     }
 
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Commands commands) {
-        return rateAlgorithmService.generateStatisticRateCurrency(listRate, commands);
+        return algorithmServiceHashMap.get(commands.getAlgorithmName()).generateStatisticRateCurrency(listRate, commands);
     }
 }

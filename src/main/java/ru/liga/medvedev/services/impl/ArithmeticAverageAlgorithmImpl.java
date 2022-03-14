@@ -14,7 +14,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Data
 @Component("ArithmeticAvg")
 public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
     private LocalDate DATE_NOW_PLUS_WEEK = LocalDate.now().plusMonths(1);

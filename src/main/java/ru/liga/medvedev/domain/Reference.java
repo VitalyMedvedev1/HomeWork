@@ -9,5 +9,6 @@ public final class Reference {
     public static final DateTimeFormatter INPUT_DATE_FORMATTER = DateTimeFormatter.ofPattern("dd.MM.yyyy");
     public static final CommandLineParser COMMAND_LINE_PARSER = new CommandLineParser();
     public static final int PRECISION = 2;
+    public static final int DAY = 1;
     public static final int COLLECTION_SIZE = LocalDate.now().lengthOfMonth() + 1;
 }

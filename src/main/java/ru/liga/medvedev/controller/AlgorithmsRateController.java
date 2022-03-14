@@ -5,8 +5,9 @@ import ru.liga.medvedev.domain.Commands;
 import ru.liga.medvedev.domain.Enum.RateAlgorithms;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.services.RateAlgorithmService;
-import ru.liga.medvedev.services.impl.ActualAlgorithmImpl;
-import ru.liga.medvedev.services.impl.ArithmeticAverageAlgorithmImpl;
+import ru.liga.medvedev.services.impl.algorithms.ActualAlgorithmImpl;
+import ru.liga.medvedev.services.impl.algorithms.ArithmeticAverageAlgorithmImpl;
+import ru.liga.medvedev.services.impl.algorithms.MoonAlgorithmImpl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,7 @@ public class AlgorithmsRateController implements AlgorithmsRate {
     public AlgorithmsRateController() {
         this.algorithmServiceHashMap.put(RateAlgorithms.AVERAGE.name(), new ArithmeticAverageAlgorithmImpl());
         this.algorithmServiceHashMap.put(RateAlgorithms.ACTUAL.name(), new ActualAlgorithmImpl());
+        this.algorithmServiceHashMap.put(RateAlgorithms.MOON.name(), new MoonAlgorithmImpl());
     }
 
     @Override

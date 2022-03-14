@@ -1,15 +1,13 @@
-package ru.liga.medvedev.services.impl;
+package ru.liga.medvedev.services.impl.algorithms;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 import ru.liga.medvedev.configuration.SpringConfiguration;
 import ru.liga.medvedev.domain.Commands;
 import ru.liga.medvedev.domain.Rate;
-import ru.liga.medvedev.repository.FileSystemCsvRateRepositoryImpl;
+import ru.liga.medvedev.services.impl.algorithms.ActualAlgorithmImpl;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 class ActualAlgorithmImplTest {

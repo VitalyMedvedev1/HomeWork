@@ -32,7 +32,8 @@ public class CommandLineParser {
             if (!isInEnum(currency, RateCurrencies.class)) {
                 commands.setErrorMessage("Формат доступный валюты USD/TRY/EUR, попробуйте ввести снова");
             } else {
-                if (!isInEnum(commandLineParts[COMMAND_ALGORITHM_INDEX].toUpperCase(), RateAlgorithms.class)) {
+                String algorithmName = commandLineParts[COMMAND_ALGORITHM_INDEX].toUpperCase();
+                if (!isInEnum(algorithmName.toUpperCase(), RateAlgorithms.class)) {
                     commands.setErrorMessage("Формат доступный для названия алгоритмов: MOON, AVERAGE, LINER, ACTUAL");
                 } else {
                     String period = commandLineParts[COMMAND_PERIOD_INDEX_FLAG].toUpperCase().replaceAll("\\W", "");
@@ -42,7 +43,7 @@ public class CommandLineParser {
                             commands.setCurrency(currency);
                             commands.setValidationFlg(true);
                             commands.setPeriod(period);
-                            commands.setAlgorithmName(commandLineParts[COMMAND_ALGORITHM_INDEX].toUpperCase());
+                            commands.setAlgorithmName(algorithmName);
                         } catch (DateTimeParseException e) {
                             commands.setErrorMessage("Неверны формат даты");
                         }
@@ -52,7 +53,7 @@ public class CommandLineParser {
                         } else {
                             commands.setPeriod(commandLineParts[COMMAND_PERIOD_DATE_INDEX].toUpperCase());
                             commands.setCurrency(currency);
-                            commands.setAlgorithmName(commandLineParts[COMMAND_ALGORITHM_INDEX].toUpperCase());
+                            commands.setAlgorithmName(algorithmName);
                             commands.setValidationFlg(true);
                         }
                     }

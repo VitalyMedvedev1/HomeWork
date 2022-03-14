@@ -25,6 +25,7 @@
         <org-apache-commons-vesion>3.2</org-apache-commons-vesion>
         <org-springframework-version>5.3.16</org-springframework-version>
         <commons-io-version>2.11.0</commons-io-version>
+        <commons-suncalc>3.5</commons-suncalc>
     </properties>
 
     <dependencies>
@@ -66,7 +67,11 @@
             <version>RELEASE</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.shredzone.commons</groupId>
+            <artifactId>commons-suncalc</artifactId>
+            <version>${commons-suncalc}</version>
+        </dependency>
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>

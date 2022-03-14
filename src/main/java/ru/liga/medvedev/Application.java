@@ -1,12 +1,9 @@
 package ru.liga.medvedev;
 
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.meta.generics.BotSession;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
-import ru.liga.medvedev.configuration.SpringConfiguration;
-import ru.liga.medvedev.controller.CommandController;
 import ru.liga.medvedev.telegram.bot.Bot;
 
 public class Application {

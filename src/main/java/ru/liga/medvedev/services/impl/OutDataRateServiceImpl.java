@@ -3,6 +3,7 @@ package ru.liga.medvedev.services.impl;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.controller.OutRateStatistic;
 import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Enum.RateAlgorithms;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.Enum.RatePeriods;
 
@@ -18,7 +19,7 @@ public class OutDataRateServiceImpl implements OutRateStatistic {
         Integer period = periodStr.equals(String.valueOf(RatePeriods.TOMORROW)) || periodStr.equals(String.valueOf(RatePeriods.DATE))  ? 1 :
                          periodStr.equals(String.valueOf(RatePeriods.WEEK)) ? 7 : 30;
         return listRates.stream()
-                .skip(periodStr.equals(String.valueOf(RatePeriods.DATE)) ? 0 : 1)
+                .skip(commands.getAlgorithmName().equals(RateAlgorithms.MOON.name()) || periodStr.equals(String.valueOf(RatePeriods.DATE)) ? 0 : 1)
                 .limit(period)
                 .map(Rate::toString)
                 .collect(Collectors.joining("\n"));

@@ -1,6 +1,5 @@
 package ru.liga.medvedev.domain;
 
-import lombok.Data;
 import ru.liga.medvedev.domain.Enum.RateAlgorithms;
 import ru.liga.medvedev.domain.Enum.RateCurrencies;
 import ru.liga.medvedev.domain.Enum.RatePeriods;
@@ -8,7 +7,6 @@ import ru.liga.medvedev.domain.Enum.RatePeriods;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
-@Data
 public class CommandLineParser {
     private static final String COMMAND_SPLITTER = " ";
     private static final int COMMAND_LENGTH = 6;
@@ -26,15 +24,24 @@ public class CommandLineParser {
     private Commands isValid(String[] commandLineParts) {
         Commands commands = new Commands();
         if (commandLineParts.length != COMMAND_LENGTH || !commandLineParts[COMMAND_RATE_INDEX].equalsIgnoreCase(commands.getInCommand())) {
-            commands.setErrorMessage("Неверный формат строки, формат 'rate + USD/TRY/EUR + week/tomorrow', попробуйте ввести снова");
+            commands.setErrorMessage("Неверный формат строки!\n" +
+                    "Доступный формат!\n" +
+                    "'rate TRY -date 22.02.2030 -alg moon'\n" +
+                    "Попробуйте ввести снова");
         } else {
             String currency = commandLineParts[COMMAND_CUR_INDEX];
             if (!isInEnum(currency, RateCurrencies.class)) {
-                commands.setErrorMessage("Формат доступный валюты USD/TRY/EUR, попробуйте ввести снова");
+                commands.setErrorMessage("Неверный формат валюты!\n" +
+                        "Доступные валюты:\n " +
+                        "USD, TRY, EUR, BGN, AMD\n" +
+                        "Попробуйте ввести снова");
             } else {
                 String algorithmName = commandLineParts[COMMAND_ALGORITHM_INDEX].toUpperCase();
                 if (!isInEnum(algorithmName.toUpperCase(), RateAlgorithms.class)) {
-                    commands.setErrorMessage("Формат доступный для названия алгоритмов: MOON, AVERAGE, LINER, ACTUAL");
+                    commands.setErrorMessage("Неверный формат алгоритма!\n" +
+                            "Доступные названия алгоритмов:\n" +
+                            "MOON, AVERAGE, LINER, ACTUAL\n" +
+                            "Попробуйте ввести снова");
                 } else {
                     String period = commandLineParts[COMMAND_PERIOD_INDEX_FLAG].toUpperCase().replaceAll("\\W", "");
                     if (period.equals(RatePeriods.DATE.toString())) {
@@ -45,11 +52,14 @@ public class CommandLineParser {
                             commands.setPeriod(period);
                             commands.setAlgorithmName(algorithmName);
                         } catch (DateTimeParseException e) {
-                            commands.setErrorMessage("Неверны формат даты");
+                            commands.setErrorMessage("Неверный формат даты!");
                         }
                     } else {
                         if (!isInEnum(commandLineParts[COMMAND_PERIOD_DATE_INDEX].toUpperCase(), RatePeriods.class)) {
-                            commands.setErrorMessage("Формат периода week/tomorrow, попробуйте ввести снова");
+                            commands.setErrorMessage("Неверный формат периода!\n" +
+                                    "Формат периода:\n" +
+                                    "week/tomorrow/month\n" +
+                                    "Попробуйте ввести снова");
                         } else {
                             commands.setPeriod(commandLineParts[COMMAND_PERIOD_DATE_INDEX].toUpperCase());
                             commands.setCurrency(currency);

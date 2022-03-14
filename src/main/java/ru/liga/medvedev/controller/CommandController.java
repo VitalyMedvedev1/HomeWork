@@ -9,7 +9,6 @@ import ru.liga.medvedev.domain.Commands;
 import ru.liga.medvedev.services.CommandService;
 import ru.liga.medvedev.services.impl.InTelegramBotServiceImpl;
 
-@Data
 @Component("CommandController")
 public class CommandController implements Command {
     private final CommandService commandService;

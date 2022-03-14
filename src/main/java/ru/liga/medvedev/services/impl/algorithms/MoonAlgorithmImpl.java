@@ -49,13 +49,12 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
         if (commands.getLocalDate() != null) {
             localDate = commands.getLocalDate();
         }
-
         listRate.add(new Rate(
                 localDate.plusDays(Reference.DAY),
-                (setRate.stream()
+                Precision.round((setRate.stream()
                         .filter(rate -> listMoonPhaseDate.contains(rate.getDate()))
                         .limit(3)
-                        .mapToDouble(r -> r.getValue()).sum()) / 3));
+                        .mapToDouble(r -> r.getValue()).sum()) / 3, 2)));
         for (int i = 2; i < Reference.COLLECTION_SIZE; i++) {
             listRate.add(new Rate(
                     localDate.plusDays(i),

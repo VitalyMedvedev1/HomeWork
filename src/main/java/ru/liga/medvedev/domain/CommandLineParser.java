@@ -29,21 +29,23 @@ public class CommandLineParser {
                 if (period.equals(RatePeriod.DATE.toString())) {
                     try {
                         commands.setLocalDate(LocalDate.parse(commandLineParts[3], Reference.INPUT_DATE_FORMATTER));
+                        commands.setCurrency(currency);
+                        commands.setValidationFlg(true);
+                        commands.setPeriod(period);
                     } catch (DateTimeParseException e) {
                         commands.setErrorMessage("Неверны формат даты");
                     }
                 }
                 else {
-                    if (!isInEnum(commandLineParts[4].toUpperCase(), RatePeriod.class)) {
+                    if (!isInEnum(commandLineParts[3].toUpperCase(), RatePeriod.class)) {
                         commands.setErrorMessage("Формат периода week/tomorrow, попробуйте ввести снова");
                     }
                     else {
-                        commands.setPeriod(commandLineParts[4].toUpperCase());
+                        commands.setPeriod(commandLineParts[3].toUpperCase());
+                        commands.setCurrency(currency);
+                        commands.setValidationFlg(true);
                     }
                 }
-                commands.setCurrency(currency);
-                commands.setPeriod(period);
-                commands.setValidationFlg(true);
             }
         }
         return commands;

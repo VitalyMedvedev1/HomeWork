@@ -16,7 +16,7 @@ public class NonCommand {
         if (!commands.isValidationFlg()) {
             return commands.getErrorMessage();
         }
-        List<List<String>> dataStatisticList = SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(commands.getCurrency());
+        List<List<String>> dataStatisticList = SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(commands);
         return SpringConfiguration.OUT_RATE_STATISTIC_CONTROLLER.outRateStatistic(commands, SpringConfiguration.ALGORITHMS_RATE_CONTROLLER.generateStatisticRateCurrency(
                 SpringConfiguration.RATE_DATA_MAPPER.mapRate(dataStatisticList), commands));
     }

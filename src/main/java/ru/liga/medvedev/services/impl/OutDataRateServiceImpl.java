@@ -18,6 +18,7 @@ public class OutDataRateServiceImpl implements OutRateStatistic {
         Integer period = periodStr.equals(String.valueOf(RatePeriod.TOMORROW)) || periodStr.equals(String.valueOf(RatePeriod.DATE))  ? 1 :
                          periodStr.equals(String.valueOf(RatePeriod.WEEK)) ? 7 : 30;
         return listRates.stream()
+                .skip(periodStr.equals(String.valueOf(RatePeriod.DATE)) ? 0 : 1)
                 .limit(period)
                 .map(Rate::toString)
                 .collect(Collectors.joining("\n"));

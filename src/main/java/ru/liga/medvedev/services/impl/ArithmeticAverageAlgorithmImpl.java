@@ -5,6 +5,7 @@ import org.apache.commons.math3.util.Precision;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Commands;
 import ru.liga.medvedev.domain.Rate;
+import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.services.RateAlgorithmService;
 
 import java.time.LocalDate;
@@ -17,14 +18,12 @@ import java.util.stream.Collectors;
 @Component("ArithmeticAvg")
 public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
     private LocalDate DATE_NOW_PLUS_WEEK = LocalDate.now().plusMonths(1);
-    private int PRECISION = 2;
-    private final int COLLECTION_SIZE = 30;
 
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Commands commands) {
         return lastWeekStatistic(listRate.stream()
                 .sorted(Comparator.comparing(Rate::getDate).reversed())
-                .limit(COLLECTION_SIZE)
+                .limit(Reference.COLLECTION_SIZE)
                 .collect(Collectors.toCollection(LinkedList::new)));
     }
 
@@ -33,7 +32,7 @@ public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
             Double avgCurs = listRate.stream()
                     .mapToDouble(rate -> rate.getValue())
                     .average().orElse(0);
-            listRate.add(0, new Rate(listRate.get(0).getDate().plusDays(1), Precision.round(avgCurs, PRECISION)));
+            listRate.add(0, new Rate(listRate.get(0).getDate().plusDays(1), Precision.round(avgCurs, Reference.PRECISION)));
             listRate.remove(listRate.size() - 1);
         }
         return listRate.stream()

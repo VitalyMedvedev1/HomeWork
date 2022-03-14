@@ -19,7 +19,7 @@ public class AlgorithmsRateController implements AlgorithmsRate {
     private RateAlgorithmService rateAlgorithmService;
 
     @Autowired
-    public AlgorithmsRateController(@Qualifier("ArithmeticAvg") RateAlgorithmService rateAlgorithmService) {
+    public AlgorithmsRateController(@Qualifier("ActualAlgorithm") RateAlgorithmService rateAlgorithmService) {
         this.rateAlgorithmService = rateAlgorithmService;
     }
 

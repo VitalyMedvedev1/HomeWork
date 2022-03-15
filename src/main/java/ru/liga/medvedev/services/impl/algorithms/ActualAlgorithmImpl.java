@@ -4,6 +4,7 @@ import org.apache.commons.math3.util.Precision;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Commands;
 import ru.liga.medvedev.domain.Rate;
+import ru.liga.medvedev.domain.RateStatisticFunctions;
 import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.services.RateAlgorithmService;
 
@@ -16,10 +17,7 @@ public class ActualAlgorithmImpl implements RateAlgorithmService {
 
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Commands commands) {
-        LocalDate localDate;
-        if ((localDate = commands.getLocalDate()) == null) {
-            localDate = LocalDate.now();
-        }
+        LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(commands);
 
         return getRateStatistic(localDate, listRate);
     }

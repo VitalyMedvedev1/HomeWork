@@ -1,10 +1,10 @@
 package ru.liga.medvedev.services.impl.algorithms;
 
-import lombok.Data;
 import org.apache.commons.math3.util.Precision;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Commands;
 import ru.liga.medvedev.domain.Rate;
+import ru.liga.medvedev.domain.RateStatisticFunctions;
 import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.services.RateAlgorithmService;
 
@@ -14,16 +14,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component("AvgArithmetic")
+@Component("AvgArithmeticAlgorithm")
 public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
     private LocalDate DATE_NOW_PLUS_WEEK = LocalDate.now().plusMonths(1);
 
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Commands commands) {
-        return lastWeekStatistic(listRate.stream()
+/*        return lastWeekStatistic(listRate.stream()
                 .sorted(Comparator.comparing(Rate::getDate).reversed())
                 .limit(Reference.COLLECTION_SIZE)
-                .collect(Collectors.toCollection(LinkedList::new)));
+                .collect(Collectors.toCollection(LinkedList::new)));*/
+        return lastWeekStatistic(RateStatisticFunctions.sortedRateList(listRate));
     }
 
     private List<Rate> lastWeekStatistic(List<Rate> listRate) {

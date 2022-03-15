@@ -5,6 +5,7 @@ import org.shredzone.commons.suncalc.MoonPhase;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Commands;
 import ru.liga.medvedev.domain.Rate;
+import ru.liga.medvedev.domain.RateStatisticFunctions;
 import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.services.RateAlgorithmService;
 
@@ -45,10 +46,7 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
 
     private List<Rate> generateRateMoonStatistic(Set<Rate> setRate, List<LocalDate> listMoonPhaseDate, Commands commands) {
         LinkedList<Rate> listRate = new LinkedList<>();
-        LocalDate localDate = LocalDate.now();
-        if (commands.getLocalDate() != null) {
-            localDate = commands.getLocalDate();
-        }
+        LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(commands);
         listRate.add(new Rate(
                 localDate.plusDays(Reference.DAY),
                 Precision.round((setRate.stream()

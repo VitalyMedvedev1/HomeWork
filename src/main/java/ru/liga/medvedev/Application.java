@@ -16,13 +16,5 @@ public class Application {
             e.printStackTrace();
         }
 
-        /*AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
-        CommandController controller = context.getBean("CommandController", CommandController.class);
-
-        Commands commands = controller.getCommand();
-
-        RateAlgorithmService rateAlgorithmService = context.getBean("ArithmeticAvg", ArithmeticAverageAlgorithmImpl.class);
-        rateAlgorithmService.generateStatisticRateCurrency(commands);*/
-        // InTelegramBotServiceImpl botApplication = context.getBean("BotApplication", InTelegramBotServiceImpl.class);
     }
 }

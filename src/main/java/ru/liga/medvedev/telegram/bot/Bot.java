@@ -4,11 +4,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
+import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.telegram.bot.command.HelpCommand;
 import ru.liga.medvedev.telegram.bot.command.StartCommand;
 import ru.liga.medvedev.telegram.bot.nonCommand.NonCommand;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 public final class Bot extends TelegramLongPollingCommandBot {
     private Logger logger = LoggerFactory.getLogger(Bot.class);
@@ -36,18 +43,7 @@ public final class Bot extends TelegramLongPollingCommandBot {
 
     @Override
     public void processNonCommandUpdate(Update update) {
-        Long chatId = update.getMessage().getChatId();
-        SendMessage message = new SendMessage();
-        message.setChatId(String.valueOf(chatId));
-
-        message.setText(nonCommand.nonCommandExecute(update.getMessage().getText()));
-
-        //message.setText("OUT_TEST_5");
-        try {
-            execute(message);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
+        nonCommand.nonCommandExecute(update);
     }
 
     @Override

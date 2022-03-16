@@ -13,8 +13,9 @@ public class Commands {
     private final String inCommand = "rate";
     private String currency;
     private String period;
-    private boolean validationFlg;
+    //private boolean validationFlg;
     private String errorMessage;
     private LocalDate localDate;
     private String algorithmName;
+    private String outputType;
 }

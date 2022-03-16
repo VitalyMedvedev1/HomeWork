@@ -28,8 +28,8 @@ public class FileSystemCsvRateRepositoryImpl implements DataRateRepository, CsvR
 
     @Override
     public List<List<String>> ReadLocalCsv(String currency) {
-        ClassLoader classLoader = getClass().getClassLoader();
-        URL url = classLoader.getResource(currency + "_NEW" + EXTENSION);//!!!!!!!!!!!!!!!!!!!!!!!!!
+//        ClassLoader classLoader = getClass().getClassLoader();
+        URL url = getClass().getClassLoader().getResource(currency + "_NEW" + EXTENSION);//!!!!!!!!!!!!!!!!!!!!!!!!!
         if (url == null) {
             throw new RuntimeException("Файл не найден");
         }

@@ -1,7 +1,6 @@
 package ru.liga.medvedev.services.impl;
 
 import org.springframework.stereotype.Component;
-import ru.liga.medvedev.domain.CommandLineParser;
 import ru.liga.medvedev.domain.Commands;
 import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.services.CommandService;
@@ -24,7 +23,7 @@ public class InConsoleServiceImpl implements CommandService {
                 String inputConsoleCommand = scanner.nextLine();
                 if (!inputConsoleCommand.equals(EXIT)) {
                     Commands commands = Reference.COMMAND_LINE_PARSER.parse(inputConsoleCommand);
-                    if (commands.isValidationFlg()) {
+                    if (commands.getErrorMessage() != null) {
                         return commands;
                     } else {
                         System.out.println(commands.getErrorMessage());

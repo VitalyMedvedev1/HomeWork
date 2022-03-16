@@ -1,4 +1,4 @@
-package ru.liga.medvedev.services.impl;
+package ru.liga.medvedev.services.impl.outtypes;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtils;
@@ -35,7 +35,6 @@ public class OutRatesChartServiceImpl implements OutRateStatistic {
     private void saveChartOnLocal(TimeSeriesCollection dataSet){
         JFreeChart chart = ChartFactory.createTimeSeriesChart("Rates prediction", "date", "rate", dataSet, true, false, false);
         try {
-            String str = System.getProperty("user.dir");
             ChartUtils.saveChartAsJPEG(new File("chart.png"), chart, 450, 400);
         } catch (IOException e) {
             throw new RuntimeException("Ошибка сохранения граффика статистики!");

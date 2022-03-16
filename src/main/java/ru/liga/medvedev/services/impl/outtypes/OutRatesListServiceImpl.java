@@ -1,4 +1,4 @@
-package ru.liga.medvedev.services.impl;
+package ru.liga.medvedev.services.impl.outtypes;
 
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.controller.OutRateStatistic;

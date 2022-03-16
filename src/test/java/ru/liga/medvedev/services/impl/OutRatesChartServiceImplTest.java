@@ -8,11 +8,10 @@ import ru.liga.medvedev.services.RateAlgorithmService;
 import ru.liga.medvedev.services.impl.algorithms.ActualAlgorithmImpl;
 import ru.liga.medvedev.services.impl.algorithms.LinearRegressionServiceImpl;
 import ru.liga.medvedev.services.impl.algorithms.MoonAlgorithmImpl;
+import ru.liga.medvedev.services.impl.outtypes.OutRatesChartServiceImpl;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class OutRatesChartServiceImplTest {
     List<Rate> listRate = new ArrayList<>();

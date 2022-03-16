@@ -18,12 +18,13 @@ public class NonCommand implements AnswerMessage {
         Long chatId = update.getMessage().getChatId();
         Commands commands = SpringConfiguration.COMMAND_CONTROLLER.getCommand(update.getMessage().getText());
 
-        if (!commands.isValidationFlg()) {
+        if (commands.getErrorMessage() != null) {
             answer(commands.getErrorMessage(), chatId);
         }
 
         List<Rate> listRate = SpringConfiguration.ALGORITHMS_RATE_CONTROLLER.generateStatisticRateCurrency(
                 SpringConfiguration.RATE_DATA_MAPPER.mapRate(SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(commands)), commands);
+//        if (commands.get)
     }
 
     @Override

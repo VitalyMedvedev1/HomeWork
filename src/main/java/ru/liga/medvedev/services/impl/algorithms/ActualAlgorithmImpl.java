@@ -2,6 +2,7 @@ package ru.liga.medvedev.services.impl.algorithms;
 
 import org.apache.commons.math3.util.Precision;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.RateStatisticFunctions;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Component("ActualAlgorithm")
+@Service("ActualAlgorithm")
 public class ActualAlgorithmImpl implements RateAlgorithmService {
 
     @Override

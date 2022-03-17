@@ -11,7 +11,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Component("OutDataRateService")
+@Component("OutDataRateListService")
 public class OutRatesListServiceImpl implements OutRateStatistic {
 
     @Override

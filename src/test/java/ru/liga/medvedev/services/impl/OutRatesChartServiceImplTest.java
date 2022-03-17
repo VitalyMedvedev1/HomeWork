@@ -1,7 +1,7 @@
 package ru.liga.medvedev.services.impl;
 
 import org.junit.jupiter.api.Test;
-import ru.liga.medvedev.configuration.SpringConfiguration;
+import ru.liga.medvedev.SpringConfiguration;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.services.RateAlgorithmService;

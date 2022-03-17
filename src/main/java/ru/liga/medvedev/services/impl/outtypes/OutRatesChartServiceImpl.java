@@ -6,15 +6,16 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
+import org.springframework.stereotype.Service;
 import ru.liga.medvedev.controller.OutRateStatistic;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
+@Service("OutRatesChartService")
 public class OutRatesChartServiceImpl implements OutRateStatistic {
     @Override
     public byte[] outRateStatistic(Command command, List<Rate> listRates) {

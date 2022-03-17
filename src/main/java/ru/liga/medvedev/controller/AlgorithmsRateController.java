@@ -1,6 +1,8 @@
 package ru.liga.medvedev.controller;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.enums.RateAlgorithms;
 import ru.liga.medvedev.domain.Rate;
@@ -13,16 +15,19 @@ import ru.liga.medvedev.services.impl.algorithms.MoonAlgorithmImpl;
 import java.util.HashMap;
 import java.util.List;
 
-@Component("AlgorithmsController")
+@Controller("AlgorithmsController")
 public class AlgorithmsRateController implements AlgorithmsRate {
 
     private HashMap<String, RateAlgorithmService> algorithmServiceHashMap = new HashMap<>();
 
-    public AlgorithmsRateController() {
-        this.algorithmServiceHashMap.put(RateAlgorithms.AVERAGE.name(), new ArithmeticAverageAlgorithmImpl());
-        this.algorithmServiceHashMap.put(RateAlgorithms.ACTUAL.name(), new ActualAlgorithmImpl());
-        this.algorithmServiceHashMap.put(RateAlgorithms.MOON.name(), new MoonAlgorithmImpl());
-        this.algorithmServiceHashMap.put(RateAlgorithms.LINER.name(), new LinearRegressionServiceImpl());
+    public AlgorithmsRateController(@Qualifier("ActualAlgorithm") ActualAlgorithmImpl actualAlgorithm,
+                                    @Qualifier("AvgArithmeticAlgorithm") ArithmeticAverageAlgorithmImpl arithmeticAverageAlgorithm,
+                                    @Qualifier("LinearRegressionAlgorithm") LinearRegressionServiceImpl linearRegressionService,
+                                    @Qualifier("MoonAlgorithm") MoonAlgorithmImpl moonAlgorithm) {
+        this.algorithmServiceHashMap.put(RateAlgorithms.AVERAGE.name(), arithmeticAverageAlgorithm);
+        this.algorithmServiceHashMap.put(RateAlgorithms.ACTUAL.name(), actualAlgorithm);
+        this.algorithmServiceHashMap.put(RateAlgorithms.MOON.name(), moonAlgorithm);
+        this.algorithmServiceHashMap.put(RateAlgorithms.LINER.name(), linearRegressionService);
     }
 
     @Override

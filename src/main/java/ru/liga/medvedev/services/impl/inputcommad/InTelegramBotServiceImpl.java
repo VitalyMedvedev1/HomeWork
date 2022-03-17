@@ -5,7 +5,7 @@ import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.services.CommandService;
 
-@Component("BotService")
+@Component("InTelegramBotService")
 public class InTelegramBotServiceImpl implements CommandService {
 
     @Override

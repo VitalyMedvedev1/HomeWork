@@ -7,7 +7,7 @@ import ru.liga.medvedev.services.CommandService;
 
 import java.util.Scanner;
 
-@Component("ConsoleService")
+@Component("InConsoleService")
 public class InConsoleServiceImpl implements CommandService {
 
     private static final String MENU = "Ведите входные данные для прогноза курса валют, в формате: 'курс валюта период'. Для выхода введите 'exit'";

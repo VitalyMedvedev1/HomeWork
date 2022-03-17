@@ -2,11 +2,9 @@ package ru.liga.medvedev.telegram.bot.nonCommand;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.telegram.telegrambots.meta.api.objects.Update;
-import ru.liga.medvedev.configuration.SpringConfiguration;
+import ru.liga.medvedev.SpringConfiguration;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.enums.RateOutTypes;
-import ru.liga.medvedev.telegram.bot.Bot;
 
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;

@@ -13,8 +13,10 @@ import ru.liga.medvedev.telegram.bot.command.StartCommand;
 import ru.liga.medvedev.telegram.bot.nonCommand.AnswerMessage;
 import ru.liga.medvedev.telegram.bot.nonCommand.NonCommand;
 
-import java.io.*;
-import java.util.HashMap;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public final class Bot extends TelegramLongPollingCommandBot implements AnswerMessage {

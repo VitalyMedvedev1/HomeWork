@@ -19,10 +19,6 @@ public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
 
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
-/*        return lastWeekStatistic(listRate.stream()
-                .sorted(Comparator.comparing(Rate::getDate).reversed())
-                .limit(Reference.COLLECTION_SIZE)
-                .collect(Collectors.toCollection(LinkedList::new)));*/
         return lastWeekStatistic(RateStatisticFunctions.sortedRateList(listRate));
     }
 

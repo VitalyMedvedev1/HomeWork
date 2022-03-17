@@ -1,4 +1,4 @@
-package ru.liga.medvedev.domain.Mapper;
+package ru.liga.medvedev.domain.mappers;
 
 import ru.liga.medvedev.domain.Rate;
 

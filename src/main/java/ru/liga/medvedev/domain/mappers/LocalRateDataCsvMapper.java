@@ -1,4 +1,4 @@
-package ru.liga.medvedev.domain.Mapper;
+package ru.liga.medvedev.domain.mappers;
 
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Rate;
@@ -7,11 +7,8 @@ import ru.liga.medvedev.domain.Reference;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Component("LocalCsvMapper")
 public class LocalRateDataCsvMapper implements RateDataMapper {

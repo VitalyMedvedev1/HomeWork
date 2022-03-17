@@ -25,6 +25,5 @@ public class Rate implements Comparable<Rate> {
         } else {
             return 1;
         }
-
     }
 }

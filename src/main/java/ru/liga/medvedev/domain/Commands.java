@@ -18,4 +18,8 @@ public class Commands {
     private LocalDate localDate;
     private String algorithmName;
     private String outputType;
+
+    public static class CommandsBuilder{
+
+    }
 }

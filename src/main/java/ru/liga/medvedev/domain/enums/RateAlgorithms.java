@@ -1,4 +1,4 @@
-package ru.liga.medvedev.domain.Enum;
+package ru.liga.medvedev.domain.enums;
 
 public enum RateAlgorithms {
     MOON, AVERAGE, LINER, ACTUAL

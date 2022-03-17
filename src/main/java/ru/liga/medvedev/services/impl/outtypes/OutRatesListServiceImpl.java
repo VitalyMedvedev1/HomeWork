@@ -3,9 +3,9 @@ package ru.liga.medvedev.services.impl.outtypes;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.controller.OutRateStatistic;
 import ru.liga.medvedev.domain.Commands;
-import ru.liga.medvedev.domain.Enum.RateAlgorithms;
+import ru.liga.medvedev.domain.enums.RateAlgorithms;
 import ru.liga.medvedev.domain.Rate;
-import ru.liga.medvedev.domain.Enum.RatePeriods;
+import ru.liga.medvedev.domain.enums.RatePeriods;
 
 import java.util.List;
 import java.util.stream.Collectors;

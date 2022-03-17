@@ -1,9 +1,9 @@
 package ru.liga.medvedev.domain;
 
-import ru.liga.medvedev.domain.Enum.RateAlgorithms;
-import ru.liga.medvedev.domain.Enum.RateCurrencies;
-import ru.liga.medvedev.domain.Enum.RateOutTypes;
-import ru.liga.medvedev.domain.Enum.RatePeriods;
+import ru.liga.medvedev.domain.enums.RateAlgorithms;
+import ru.liga.medvedev.domain.enums.RateCurrencies;
+import ru.liga.medvedev.domain.enums.RateOutTypes;
+import ru.liga.medvedev.domain.enums.RatePeriods;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -23,16 +23,15 @@ public class CommandLineParser {
         String[] commandLineParts = commandInputStr.trim().split(COMMAND_SPLITTER);
         Commands commands = new Commands();
 
-        if (validationLength(commands, commandLineParts)){
-            if (validationCurrency(commands, commandLineParts)){
-                if (validationOutType(commands, commandLineParts)){
-                    if (validationAlgorithmName(commands, commandLineParts)){
-                        if (validationPeriod(commands, commandLineParts)){
-                        }
+        /*if (validationLength(commands, commandLineParts)) {
+            if (validationCurrency(commands, commandLineParts)) {
+                if (validationOutType(commands, commandLineParts)) {
+                    if (validationAlgorithmName(commands, commandLineParts)) {
+                        validationPeriod(commands, commandLineParts);
                     }
                 }
             }
-        }
+        }*/
         return commands;
     }
 
@@ -50,23 +49,22 @@ public class CommandLineParser {
 
     private boolean validationCurrency(Commands commands, String[] commandLineParts) {
         String currency = commandLineParts[COMMAND_CUR_INDEX].toUpperCase();
-        if (!isInEnum(currency, RateCurrencies.class)) {
+        if (equalsInEnum(currency, RateCurrencies.class)) {
             commands.setErrorMessage("Неверный формат валюты!\n" +
                     "Доступные валюты:\n " +
                     "USD, TRY, EUR, BGN, AMD\n" +
                     "Попробуйте ввести снова");
             return false;
-        }
-        else {
+        } else {
             commands.setCurrency(currency);
         }
         return true;
     }
 
     private boolean validationOutType(Commands commands, String[] commandLineParts) {
-        if (commandLineParts.length == COMMAND_LENGTH_MAX){
+        if (commandLineParts.length == COMMAND_LENGTH_MAX) {
             String outType = commandLineParts[COMMAND_OUT_TYPE_INDEX].toUpperCase();
-            if (!isInEnum(outType.toUpperCase(), RateOutTypes.class)){
+            if (equalsInEnum(outType.toUpperCase(), RateOutTypes.class)) {
                 commands.setErrorMessage("Неверный формат типа вывода!\n" +
                         "Доступные названия:\n" +
                         "LIST, GRAPH или без флага -output\n" +
@@ -74,8 +72,7 @@ public class CommandLineParser {
                 return false;
             }
             commands.setOutputType(outType);
-        }
-        else {
+        } else {
             commands.setOutputType(RateOutTypes.DEFAULT.name());
         }
         return true;
@@ -83,20 +80,19 @@ public class CommandLineParser {
 
     private boolean validationAlgorithmName(Commands commands, String[] commandLineParts) {
         String algorithmName = commandLineParts[COMMAND_ALGORITHM_INDEX].toUpperCase();
-        if (!isInEnum(algorithmName.toUpperCase(), RateAlgorithms.class)) {
+        if (equalsInEnum(algorithmName.toUpperCase(), RateAlgorithms.class)) {
             commands.setErrorMessage("Неверный формат алгоритма!\n" +
                     "Доступные названия алгоритмов:\n" +
                     "MOON, AVERAGE, LINER, ACTUAL\n" +
                     "Попробуйте ввести снова");
             return false;
-        }
-        else {
+        } else {
             commands.setAlgorithmName(algorithmName);
         }
         return true;
     }
 
-    private boolean validationPeriod(Commands commands, String[] commandLineParts) {
+    private void validationPeriod(Commands commands, String[] commandLineParts) {
         String period = commandLineParts[COMMAND_PERIOD_INDEX_FLAG].toUpperCase().replaceAll("\\W", "");
         if (period.equals(RatePeriods.DATE.toString())) {
             try {
@@ -104,28 +100,25 @@ public class CommandLineParser {
                 commands.setPeriod(period);
             } catch (DateTimeParseException e) {
                 commands.setErrorMessage("Неверный формат даты!");
-                return false;
             }
         } else {
-            if (!isInEnum(commandLineParts[COMMAND_PERIOD_DATE_INDEX].toUpperCase(), RatePeriods.class)) {
+            if (equalsInEnum(commandLineParts[COMMAND_PERIOD_DATE_INDEX].toUpperCase(), RatePeriods.class)) {
                 commands.setErrorMessage("Неверный формат периода!\n" +
                         "Формат периода:\n" +
                         "week/tomorrow/month\n" +
                         "Попробуйте ввести снова");
-                return false;
             } else {
                 commands.setPeriod(commandLineParts[COMMAND_PERIOD_DATE_INDEX].toUpperCase());
             }
         }
-        return true;
     }
 
-    private static <E extends Enum<E>> boolean isInEnum(String value, Class<E> enumClass) {
+    private static <E extends Enum<E>> boolean equalsInEnum(String value, Class<E> enumClass) {
         for (E e : enumClass.getEnumConstants()) {
             if (e.name().equals(value)) {
-                return true;
+                return false;
             }
         }
-        return false;
+        return true;
     }
 }

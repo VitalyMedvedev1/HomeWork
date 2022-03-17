@@ -2,7 +2,7 @@ package ru.liga.medvedev.controller;
 
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Commands;
-import ru.liga.medvedev.domain.Enum.RateAlgorithms;
+import ru.liga.medvedev.domain.enums.RateAlgorithms;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.services.RateAlgorithmService;
 import ru.liga.medvedev.services.impl.algorithms.ActualAlgorithmImpl;

@@ -3,7 +3,7 @@ package ru.liga.medvedev.services.impl.algorithms;
 import org.apache.commons.math3.util.Precision;
 import org.shredzone.commons.suncalc.MoonPhase;
 import org.springframework.stereotype.Component;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.RateStatisticFunctions;
 import ru.liga.medvedev.domain.Reference;
@@ -22,11 +22,11 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
     private final int MOON_PHASE_DAYS = 90;
 
     @Override
-    public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Commands commands) {
+    public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
         return generateRateMoonStatistic(listRate.stream()
                         .limit(MOON_PHASE_DAYS)
                         .collect(Collectors.toCollection(TreeSet::new)),
-                getMoonPhasePredict(listRate.get(0).getDate()), commands);
+                getMoonPhasePredict(listRate.get(0).getDate()), command);
     }
 
     private List<LocalDate> getMoonPhasePredict(LocalDate lastDateRate) {
@@ -44,9 +44,9 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
         return moonPhaseDate;
     }
 
-    private List<Rate> generateRateMoonStatistic(Set<Rate> setRate, List<LocalDate> listMoonPhaseDate, Commands commands) {
+    private List<Rate> generateRateMoonStatistic(Set<Rate> setRate, List<LocalDate> listMoonPhaseDate, Command command) {
         LinkedList<Rate> listRate = new LinkedList<>();
-        LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(commands);
+        LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(command);
         listRate.add(new Rate(
                 localDate.plusDays(Reference.DAY),
                 Precision.round((setRate.stream()

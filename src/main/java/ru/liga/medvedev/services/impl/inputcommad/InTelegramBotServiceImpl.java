@@ -1,7 +1,7 @@
-package ru.liga.medvedev.services.impl;
+package ru.liga.medvedev.services.impl.inputcommad;
 
 import org.springframework.stereotype.Component;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.services.CommandService;
 
@@ -9,12 +9,12 @@ import ru.liga.medvedev.services.CommandService;
 public class InTelegramBotServiceImpl implements CommandService {
 
     @Override
-    public Commands getCommands() {
+    public Command getCommands() {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public Commands getCommands(String text) {
+    public Command getCommands(String text) {
         return Reference.COMMAND_LINE_PARSER.parse(text);
     }
 }

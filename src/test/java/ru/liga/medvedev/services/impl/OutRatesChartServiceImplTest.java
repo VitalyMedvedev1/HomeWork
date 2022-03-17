@@ -2,7 +2,7 @@ package ru.liga.medvedev.services.impl;
 
 import org.junit.jupiter.api.Test;
 import ru.liga.medvedev.configuration.SpringConfiguration;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.services.RateAlgorithmService;
 import ru.liga.medvedev.services.impl.algorithms.ActualAlgorithmImpl;
@@ -22,11 +22,11 @@ class OutRatesChartServiceImplTest {
 
     @Test
     public void generateRate() {
-        Commands commands = SpringConfiguration.COMMAND_CONTROLLER.getCommand("rate USD -Date 17.03.2022 -alg moon");
-        List<List<String>> list = SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(commands);
+        Command command = SpringConfiguration.COMMAND_CONTROLLER.getCommand("rate USD -Date 17.03.2022 -alg moon");
+        List<List<String>> list = SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(command);
         listRate = SpringConfiguration.RATE_DATA_MAPPER.mapRate(list);
-        listRate = actualAlgorithm.generateStatisticRateCurrency(listRate, commands);
-        outRatesChartService.outRateStatistic(commands, listRate);
+        listRate = actualAlgorithm.generateStatisticRateCurrency(listRate, command);
+        outRatesChartService.outRateStatistic(command, listRate);
 
 
         System.out.println(listRate);

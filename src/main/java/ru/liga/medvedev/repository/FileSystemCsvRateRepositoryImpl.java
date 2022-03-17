@@ -2,7 +2,7 @@ package ru.liga.medvedev.repository;
 
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.controller.DataRateRepository;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Reference;
 
 import java.io.BufferedReader;
@@ -22,8 +22,8 @@ public class FileSystemCsvRateRepositoryImpl implements DataRateRepository, CsvR
     private static final String EXTENSION = ".csv";
 
     @Override
-    public List<List<String>> getRateDataRepository(Commands commands) {
-        return ReadLocalCsv(commands.getCurrency());
+    public List<List<String>> getRateDataRepository(Command command) {
+        return ReadLocalCsv(command.getCurrency());
     }
 
     @Override

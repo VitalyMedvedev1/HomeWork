@@ -2,7 +2,7 @@ package ru.liga.medvedev.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.services.impl.outtypes.OutRatesChartServiceImpl;
 import ru.liga.medvedev.services.impl.outtypes.OutRatesListServiceImpl;
@@ -25,7 +25,7 @@ public class OutRateStatisticController implements OutRateStatistic {
     }
 
     @Override
-    public String outRateStatistic(Commands commands, List<Rate> listRates) {
-        return outRateStatisticMap.get(commands.getAlgorithmName()).outRateStatistic(commands, listRates);
+    public String outRateStatistic(Command command, List<Rate> listRates) {
+        return outRateStatisticMap.get(command.getAlgorithmName()).outRateStatistic(command, listRates);
     }
 }

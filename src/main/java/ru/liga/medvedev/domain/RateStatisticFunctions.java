@@ -15,9 +15,9 @@ public class RateStatisticFunctions {
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    public static LocalDate getFromWhatDateRate(Commands commands){
+    public static LocalDate getFromWhatDateRate(Command command){
         LocalDate localDate;
-        if ((localDate = commands.getLocalDate()) == null) {
+        if ((localDate = command.getLocalDate()) == null) {
             localDate = LocalDate.now();
         }
         return localDate;

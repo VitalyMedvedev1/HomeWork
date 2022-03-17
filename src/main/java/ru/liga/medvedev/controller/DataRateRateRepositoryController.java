@@ -3,7 +3,7 @@ package ru.liga.medvedev.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ public class DataRateRateRepositoryController implements DataRateRepository {
     }
 
     @Override
-    public List<List<String>> getRateDataRepository(Commands commands) {
-        return dataRateRepository.getRateDataRepository(commands);
+    public List<List<String>> getRateDataRepository(Command command) {
+        return dataRateRepository.getRateDataRepository(command);
     }
 }

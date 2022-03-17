@@ -1,7 +1,7 @@
 package ru.liga.medvedev.controller;
 
 import org.springframework.stereotype.Component;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.enums.RateAlgorithms;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.services.RateAlgorithmService;
@@ -26,7 +26,7 @@ public class AlgorithmsRateController implements AlgorithmsRate {
     }
 
     @Override
-    public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Commands commands) {
-        return algorithmServiceHashMap.get(commands.getAlgorithmName()).generateStatisticRateCurrency(listRate, commands);
+    public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
+        return algorithmServiceHashMap.get(command.getAlgorithmName()).generateStatisticRateCurrency(listRate, command);
     }
 }

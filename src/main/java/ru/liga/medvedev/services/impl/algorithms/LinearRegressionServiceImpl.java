@@ -2,7 +2,7 @@ package ru.liga.medvedev.services.impl.algorithms;
 
 import org.apache.commons.math3.util.Precision;
 import org.springframework.stereotype.Component;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.RateStatisticFunctions;
 import ru.liga.medvedev.domain.Reference;
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 public class LinearRegressionServiceImpl implements RateAlgorithmService {
 
     @Override
-    public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Commands commands) {
+    public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
         listRate = RateStatisticFunctions.sortedRateList(listRate);
         List<double[]> listArrayRate = generateRateArraysLastMonth(listRate);
         LinearRegression linearRegression = new LinearRegression(listArrayRate.get(0), listArrayRate.get(1));
@@ -27,7 +27,7 @@ public class LinearRegressionServiceImpl implements RateAlgorithmService {
 
 //        List<Rate> newRateStat = genRateFromLinearRegressionFunction(linearRegression.slope(), linearRegression.intercept(), listRate.size(), commands);
 
-        return genRateFromLinearRegressionFunction(linearRegression.slope(), linearRegression.intercept(), listRate.size(), commands);
+        return genRateFromLinearRegressionFunction(linearRegression.slope(), linearRegression.intercept(), listRate.size(), command);
     }
 
     private List<double[]> generateRateArraysLastMonth(List<Rate> listRate) {
@@ -42,9 +42,9 @@ public class LinearRegressionServiceImpl implements RateAlgorithmService {
         return listArrayRate;
     }
 
-    private List<Rate> genRateFromLinearRegressionFunction(double slope, double intercept, int rateStatisticSize, Commands commands) {
+    private List<Rate> genRateFromLinearRegressionFunction(double slope, double intercept, int rateStatisticSize, Command command) {
         List<Rate> listRate = new ArrayList<>();
-        LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(commands);
+        LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(command);
         for (int i = 0; i < Reference.COLLECTION_SIZE; i++) {
             listRate.add(new Rate(localDate.plusDays(i), Precision.round((rateStatisticSize + i - intercept) / slope, Reference.PRECISION)));
         }

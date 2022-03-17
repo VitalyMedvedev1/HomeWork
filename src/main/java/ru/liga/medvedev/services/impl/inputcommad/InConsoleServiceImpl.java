@@ -1,7 +1,7 @@
-package ru.liga.medvedev.services.impl;
+package ru.liga.medvedev.services.impl.inputcommad;
 
 import org.springframework.stereotype.Component;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.services.CommandService;
 
@@ -16,17 +16,17 @@ public class InConsoleServiceImpl implements CommandService {
 
 
     @Override
-    public Commands getCommands() {
+    public Command getCommands() {
         System.out.println(MENU);
         try (Scanner scanner = new Scanner(System.in)) {
             while (true) {
                 String inputConsoleCommand = scanner.nextLine();
                 if (!inputConsoleCommand.equals(EXIT)) {
-                    Commands commands = Reference.COMMAND_LINE_PARSER.parse(inputConsoleCommand);
-                    if (commands.getErrorMessage() != null) {
-                        return commands;
+                    Command command = Reference.COMMAND_LINE_PARSER.parse(inputConsoleCommand);
+                    if (command.getErrorMessage() != null) {
+                        return command;
                     } else {
-                        System.out.println(commands.getErrorMessage());
+                        System.out.println(command.getErrorMessage());
                     }
                 } else {
                     System.out.println("Exit");
@@ -37,7 +37,7 @@ public class InConsoleServiceImpl implements CommandService {
     }
 
     @Override
-    public Commands getCommands(String text) {
+    public Command getCommands(String text) {
         throw new UnsupportedOperationException();
     }
 }

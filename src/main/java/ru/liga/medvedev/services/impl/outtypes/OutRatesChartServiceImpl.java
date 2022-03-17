@@ -7,7 +7,7 @@ import org.jfree.data.time.Day;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import ru.liga.medvedev.controller.OutRateStatistic;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 
 import java.io.File;
@@ -16,8 +16,8 @@ import java.util.List;
 
 public class OutRatesChartServiceImpl implements OutRateStatistic {
     @Override
-    public String outRateStatistic(Commands commands, List<Rate> listRates) {
-        TimeSeriesCollection dataSet = generateDataSet(listRates, commands.getCurrency());
+    public String outRateStatistic(Command command, List<Rate> listRates) {
+        TimeSeriesCollection dataSet = generateDataSet(listRates, command.getCurrency());
         saveChartOnLocal(dataSet);
         return "chart";
     }

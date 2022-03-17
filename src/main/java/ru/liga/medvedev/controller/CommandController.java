@@ -1,16 +1,14 @@
 package ru.liga.medvedev.controller;
 
-import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-import ru.liga.medvedev.domain.CommandLineParser;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.services.CommandService;
-import ru.liga.medvedev.services.impl.InTelegramBotServiceImpl;
+import ru.liga.medvedev.services.impl.inputcommad.InTelegramBotServiceImpl;
 
 @Component("CommandController")
-public class CommandController implements Command {
+public class CommandController implements ru.liga.medvedev.controller.Command {
     private final CommandService commandService;
 
     /*    @Autowired
@@ -23,12 +21,12 @@ public class CommandController implements Command {
     }
 
     @Override
-    public Commands getCommand() {
+    public Command getCommand() {
         return commandService.getCommands();
     }
 
     @Override
-    public Commands getCommand(String text) {
+    public Command getCommand(String text) {
         return commandService.getCommands(text);
     }
 }

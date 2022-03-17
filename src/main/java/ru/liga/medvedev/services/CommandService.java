@@ -1,8 +1,8 @@
 package ru.liga.medvedev.services;
 
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 
 public interface CommandService {
-    Commands getCommands();
-    Commands getCommands(String text);
+    Command getCommands();
+    Command getCommands(String text);
 }

@@ -2,7 +2,7 @@ package ru.liga.medvedev.services.impl.algorithms;
 
 import org.apache.commons.math3.util.Precision;
 import org.springframework.stereotype.Component;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.RateStatisticFunctions;
 import ru.liga.medvedev.domain.Reference;
@@ -16,8 +16,8 @@ import java.util.stream.Collectors;
 public class ActualAlgorithmImpl implements RateAlgorithmService {
 
     @Override
-    public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Commands commands) {
-        LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(commands);
+    public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
+        LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(command);
 
         return getRateStatistic(localDate, listRate);
     }

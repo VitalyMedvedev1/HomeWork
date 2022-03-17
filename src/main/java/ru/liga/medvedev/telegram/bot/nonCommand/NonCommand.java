@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import ru.liga.medvedev.configuration.SpringConfiguration;
-import ru.liga.medvedev.domain.Commands;
+import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 
 import java.io.File;
@@ -16,14 +16,14 @@ public class NonCommand implements AnswerMessage {
     public void nonCommandExecute(Update update) {
         logger.debug("Строка команды\n" + update.getMessage().getText());
         Long chatId = update.getMessage().getChatId();
-        Commands commands = SpringConfiguration.COMMAND_CONTROLLER.getCommand(update.getMessage().getText());
+        Command command = SpringConfiguration.COMMAND_CONTROLLER.getCommand(update.getMessage().getText());
 
-        if (commands.getErrorMessage() != null) {
-            answer(commands.getErrorMessage(), chatId);
+        if (command.getErrorMessage() != null) {
+            answer(command.getErrorMessage(), chatId);
         }
 
         List<Rate> listRate = SpringConfiguration.ALGORITHMS_RATE_CONTROLLER.generateStatisticRateCurrency(
-                SpringConfiguration.RATE_DATA_MAPPER.mapRate(SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(commands)), commands);
+                SpringConfiguration.RATE_DATA_MAPPER.mapRate(SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(command)), command);
 //        if (commands.get)
     }
 

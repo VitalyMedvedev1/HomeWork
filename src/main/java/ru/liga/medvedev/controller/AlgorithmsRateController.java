@@ -1,11 +1,10 @@
 package ru.liga.medvedev.controller;
 
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import ru.liga.medvedev.domain.Command;
-import ru.liga.medvedev.domain.enums.RateAlgorithms;
 import ru.liga.medvedev.domain.Rate;
+import ru.liga.medvedev.domain.enums.RateAlgorithms;
 import ru.liga.medvedev.services.RateAlgorithmService;
 import ru.liga.medvedev.services.impl.algorithms.ActualAlgorithmImpl;
 import ru.liga.medvedev.services.impl.algorithms.ArithmeticAverageAlgorithmImpl;
@@ -18,7 +17,7 @@ import java.util.List;
 @Controller("AlgorithmsController")
 public class AlgorithmsRateController implements AlgorithmsRate {
 
-    private HashMap<String, RateAlgorithmService> algorithmServiceHashMap = new HashMap<>();
+    private final HashMap<String, RateAlgorithmService> algorithmServiceHashMap = new HashMap<>();
 
     public AlgorithmsRateController(@Qualifier("ActualAlgorithm") ActualAlgorithmImpl actualAlgorithm,
                                     @Qualifier("AvgArithmeticAlgorithm") ArithmeticAverageAlgorithmImpl arithmeticAverageAlgorithm,

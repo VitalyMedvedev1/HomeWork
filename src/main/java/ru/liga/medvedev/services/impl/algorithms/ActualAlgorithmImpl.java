@@ -1,7 +1,6 @@
 package ru.liga.medvedev.services.impl.algorithms;
 
 import org.apache.commons.math3.util.Precision;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;

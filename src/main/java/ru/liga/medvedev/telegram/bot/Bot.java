@@ -16,13 +16,13 @@ import ru.liga.medvedev.telegram.bot.nonCommand.NonCommand;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public final class Bot extends TelegramLongPollingCommandBot implements AnswerMessage {
     private Logger logger = LoggerFactory.getLogger(Bot.class);
-    private String BOT_TOKEN;
-    private String BOT_NAME;
+    private final String BOT_TOKEN;
+    private final String BOT_NAME;
     private final NonCommand nonCommand;
 
     public Bot(String BOT_TOKEN, String BOT_NAME) {
@@ -48,7 +48,7 @@ public final class Bot extends TelegramLongPollingCommandBot implements AnswerMe
         Long chatId = update.getMessage().getChatId();
         Map<byte[], Boolean> outMapMessage = nonCommand.nonCommandExecute(update.getMessage().getText());
         for (Map.Entry<byte[], Boolean> entry : outMapMessage.entrySet()
-             ) {
+        ) {
             answer(entry.getKey(), chatId, entry.getValue());
         }
     }
@@ -60,30 +60,24 @@ public final class Bot extends TelegramLongPollingCommandBot implements AnswerMe
 
     @Override
     public void answer(byte[] message, Long chatId, boolean typeAnswer) {
-        if (typeAnswer){
+        if (typeAnswer) {
             SendMessage sendMessage = new SendMessage();
             sendMessage.setChatId(String.valueOf(chatId));
-            String text = null;
-            try {
-                text = new String(message, "UTF-8");
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
+            String text;
+            text = new String(message, StandardCharsets.UTF_8);
             sendMessage.setText(text);
             try {
                 execute(sendMessage);
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
-        }
-        else {
+        } else {
             SendPhoto sendPhoto = new SendPhoto();
             sendPhoto.setChatId(String.valueOf(chatId));
-            try(InputStream inputStream = new ByteArrayInputStream(message)){
+            try (InputStream inputStream = new ByteArrayInputStream(message)) {
                 sendPhoto.setPhoto(new InputFile(inputStream, "Rate predict"));
                 execute(sendPhoto);
-            }
-            catch (IOException | TelegramApiException e) {
+            } catch (IOException | TelegramApiException e) {
                 e.printStackTrace();
             }
         }

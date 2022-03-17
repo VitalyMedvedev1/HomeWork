@@ -18,19 +18,14 @@ public class NonCommand {
         Command command = SpringConfiguration.COMMAND_CONTROLLER.getCommand(messageText);
         Map<byte[], Boolean> outMapMessage = new HashMap<>();
         if (command.getErrorMessage() != null) {
-//            bot.answer(command.getErrorMessage().getBytes(StandardCharsets.UTF_8), chatId, true);
             outMapMessage.put(command.getErrorMessage().getBytes(StandardCharsets.UTF_8), true);
-            return outMapMessage;
-        }
-        else {
-//            bot.answer(SpringConfiguration.OUT_RATE_STATISTIC_CONTROLLER.outRateStatistic(command, SpringConfiguration.ALGORITHMS_RATE_CONTROLLER.generateStatisticRateCurrency(
-//                    SpringConfiguration.RATE_DATA_MAPPER.mapRate(SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(command)), command)), chatId, !command.getOutputType().equals(RateOutTypes.GRAPH.name()));
+        } else {
             outMapMessage.put(
                     SpringConfiguration.OUT_RATE_STATISTIC_CONTROLLER.outRateStatistic(
                             command, SpringConfiguration.ALGORITHMS_RATE_CONTROLLER.generateStatisticRateCurrency(
                                     SpringConfiguration.RATE_DATA_MAPPER.mapRate(
                                             SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(command)), command)), !command.getOutputType().equals(RateOutTypes.GRAPH.name()));
-            return outMapMessage;
         }
+        return outMapMessage;
     }
 }

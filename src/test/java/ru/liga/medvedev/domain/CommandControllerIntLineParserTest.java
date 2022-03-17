@@ -9,7 +9,7 @@ import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertThat;
 
-class CommandLineParserTest {
+class CommandControllerIntLineParserTest {
 
     private Command command = new Command();
     private final CommandLineParser commandLineParser = new CommandLineParser();

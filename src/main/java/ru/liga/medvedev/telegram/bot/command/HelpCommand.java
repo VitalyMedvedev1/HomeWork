@@ -12,7 +12,7 @@ public class HelpCommand extends ServiceCommand {
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
-        sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), "Ведите входные данные для прогноза курса валют, в формате: 'курс валюта период алгоритм'.\n\n" +
+        sendAnswer(absSender, chat.getId(), "Ведите входные данные для прогноза курса валют, в формате: 'курс валюта период алгоритм'.\n\n" +
                 "Пример строки:\n " +
                 "*rate TRY -date 22.02.2030 -alg moon*");
     }

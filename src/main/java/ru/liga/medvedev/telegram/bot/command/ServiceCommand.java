@@ -14,7 +14,7 @@ abstract class ServiceCommand extends BotCommand {
         super(identifier, description);
     }
 
-    void sendAnswer(AbsSender absSender, Long chatId, String commandName, String text) {
+    void sendAnswer(AbsSender absSender, Long chatId, String text) {
         SendMessage message = new SendMessage();
         message.enableMarkdown(true);
         message.setChatId(chatId.toString());

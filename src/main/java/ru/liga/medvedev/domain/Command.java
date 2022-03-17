@@ -28,7 +28,7 @@ public class Command {
     private LocalDate localDate;
 
     public static class Builder implements CommandBuilder {
-        private Command inputCommand;
+        private final Command inputCommand;
 
         public Builder() {
             this.inputCommand = new Command();

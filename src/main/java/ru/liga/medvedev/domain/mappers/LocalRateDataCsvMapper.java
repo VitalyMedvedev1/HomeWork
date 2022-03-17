@@ -14,9 +14,6 @@ import java.util.List;
 public class LocalRateDataCsvMapper implements RateDataMapper {
 
     private static final NumberFormat numberFormat = NumberFormat.getInstance();
-/*    private static final String DATE = "date";
-    private static final String CURS = "curs";
-    private static final String NOMINAL = "nominal";*/
 
     @Override
     public List<Rate> mapRate(List<List<String>> listData) {
@@ -26,19 +23,19 @@ public class LocalRateDataCsvMapper implements RateDataMapper {
             for (int i = 1; i < listData.size(); i++) {
                 if (headers.size() == listData.get(i).size()) {
                     LocalDate localDate = null;
-                    Double course = null;
-                    Double nominal = 1.0;
+                    double course = 0d;
+                    double nominal = 1d;
                     List<String> listStrRate = listData.get(i);
                     for (int j = 0; j < headers.size(); j++) {
                         if (headers.get(j).replaceAll("\\W", "").equals("data")) {
                             localDate = LocalDate.parse(listStrRate.get(j), Reference.INPUT_DATE_FORMATTER);
                         } else if (headers.get(j).equals("curs")) {
-                            course = Double.parseDouble(String.valueOf(numberFormat.parse(listStrRate.get(j).replaceAll("\"",""))));
+                            course = Double.parseDouble(String.valueOf(numberFormat.parse(listStrRate.get(j).replaceAll("\"", ""))));
                         } else if (headers.get(j).equals("nominal")) {
-                            nominal =  Double.parseDouble(String.valueOf(numberFormat.parse(listStrRate.get(j))));
+                            nominal = Double.parseDouble(String.valueOf(numberFormat.parse(listStrRate.get(j))));
                         }
                     }
-                    listRates.add(new Rate(localDate, course/nominal));
+                    listRates.add(new Rate(localDate, course / nominal));
                 }
             }
         } catch (ParseException e) {

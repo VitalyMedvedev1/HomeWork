@@ -19,10 +19,10 @@ import java.util.stream.Collectors;
 
 @Component("MoonAlgorithm")
 public class MoonAlgorithmImpl implements RateAlgorithmService {
-    private final int MOON_PHASE_DAYS = 90;
 
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
+        int MOON_PHASE_DAYS = 90;
         return generateRateMoonStatistic(listRate.stream()
                         .limit(MOON_PHASE_DAYS)
                         .collect(Collectors.toCollection(TreeSet::new)),
@@ -52,7 +52,7 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
                 Precision.round((setRate.stream()
                         .filter(rate -> listMoonPhaseDate.contains(rate.getDate()))
                         .limit(3)
-                        .mapToDouble(r -> r.getValue()).sum()) / 3, 2)));
+                        .mapToDouble(Rate::getValue).sum()) / 3, 2)));
         for (int i = 2; i < Reference.COLLECTION_SIZE; i++) {
             listRate.add(new Rate(
                     localDate.plusDays(i),

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Component("AvgArithmeticAlgorithm")
 public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
-    private LocalDate DATE_NOW_PLUS_WEEK = LocalDate.now().plusMonths(1);
+    private final LocalDate DATE_NOW_PLUS_WEEK = LocalDate.now().plusMonths(1);
 
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {

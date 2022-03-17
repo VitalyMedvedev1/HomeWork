@@ -17,7 +17,7 @@ public class StartCommand extends ServiceCommand {
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         //logger.debug(String.format("Пользователь %s. Начато выполнение команды %s", this.getCommandIdentifier()));
-        sendAnswer(absSender, chat.getId(), this.getCommandIdentifier(), "Давайте начнём! Если Вам нужна помощь, нажмите /help");
+        sendAnswer(absSender, chat.getId(), "Давайте начнём! Если Вам нужна помощь, нажмите /help");
         //logger.debug(String.format("Пользователь %s. Завершено выполнение команды %s", this.getCommandIdentifier()));
     }
 }

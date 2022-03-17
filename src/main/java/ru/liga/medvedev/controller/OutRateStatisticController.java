@@ -16,7 +16,7 @@ import java.util.Map;
 @Component("OutStatisticController")
 public class OutRateStatisticController implements OutRateStatistic {
 
-    private Map<String, OutRateStatistic> outRateStatisticMap = new HashMap<>();
+    private final Map<String, OutRateStatistic> outRateStatisticMap = new HashMap<>();
 
     @Autowired
     public OutRateStatisticController(@Qualifier("OutDataRateListService") OutRatesListServiceImpl outRatesListService,

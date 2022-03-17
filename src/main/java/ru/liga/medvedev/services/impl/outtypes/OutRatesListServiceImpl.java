@@ -7,6 +7,7 @@ import ru.liga.medvedev.domain.enums.RateAlgorithms;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.enums.RatePeriods;
 
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,7 @@ import java.util.stream.Collectors;
 public class OutRatesListServiceImpl implements OutRateStatistic {
 
     @Override
-    public String outRateStatistic(Command command, List<Rate> listRates) {
+    public byte[] outRateStatistic(Command command, List<Rate> listRates) {
         String periodStr = command.getPeriod().toUpperCase();
         int period = periodStr.equals(String.valueOf(RatePeriods.TOMORROW)) || periodStr.equals(String.valueOf(RatePeriods.DATE))  ? 1 :
                          periodStr.equals(String.valueOf(RatePeriods.WEEK)) ? 7 : 30;
@@ -22,6 +23,6 @@ public class OutRatesListServiceImpl implements OutRateStatistic {
                 .skip(command.getAlgorithmName().equals(RateAlgorithms.MOON.name()) || periodStr.equals(String.valueOf(RatePeriods.DATE)) ? 0 : 1)
                 .limit(period)
                 .map(Rate::toString)
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining("\n")).getBytes(StandardCharsets.UTF_8);
     }
 }

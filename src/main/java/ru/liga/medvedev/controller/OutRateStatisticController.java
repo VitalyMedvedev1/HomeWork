@@ -25,7 +25,7 @@ public class OutRateStatisticController implements OutRateStatistic {
     }
 
     @Override
-    public String outRateStatistic(Command command, List<Rate> listRates) {
+    public byte[] outRateStatistic(Command command, List<Rate> listRates) {
         return outRateStatisticMap.get(command.getOutputType()).outRateStatistic(command, listRates);
     }
 }

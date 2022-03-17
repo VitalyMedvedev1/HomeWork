@@ -23,10 +23,6 @@ public class LinearRegressionServiceImpl implements RateAlgorithmService {
         listRate = RateStatisticFunctions.sortedRateList(listRate);
         List<double[]> listArrayRate = generateRateArraysLastMonth(listRate);
         LinearRegression linearRegression = new LinearRegression(listArrayRate.get(0), listArrayRate.get(1));
-        System.out.println(linearRegression.slope() + "\n" + linearRegression.intercept());
-
-//        List<Rate> newRateStat = genRateFromLinearRegressionFunction(linearRegression.slope(), linearRegression.intercept(), listRate.size(), commands);
-
         return genRateFromLinearRegressionFunction(linearRegression.slope(), linearRegression.intercept(), listRate.size(), command);
     }
 

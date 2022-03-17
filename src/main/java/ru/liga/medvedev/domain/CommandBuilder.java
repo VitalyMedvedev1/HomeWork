@@ -1,19 +1,17 @@
 package ru.liga.medvedev.domain;
 
-import java.util.Optional;
-
 public interface CommandBuilder {
     Command.Builder validationLength(int commandLength, String rateCommand);
 
-    Command.Builder  validationCurrency(String currency);
+    Command.Builder validationCurrency(String currency);
 
-    Command.Builder  validationOutType(String[] commandLineParts);
+    Command.Builder validationOutType(String[] commandLineParts);
 
-    Command.Builder  validationAlgorithmName(String algorithmName);
+    Command.Builder validationAlgorithmName(String algorithmName);
 
-    Command.Builder  validationPeriod(String period, String date);
+    Command.Builder validationPeriod(String period, String date);
 
-    default  <E extends Enum<E>> boolean equalsInEnum(String value, Class<E> enumClass) {
+    default <E extends Enum<E>> boolean equalsInEnum(String value, Class<E> enumClass) {
         for (E e : enumClass.getEnumConstants()) {
             if (e.name().equals(value)) {
                 return false;

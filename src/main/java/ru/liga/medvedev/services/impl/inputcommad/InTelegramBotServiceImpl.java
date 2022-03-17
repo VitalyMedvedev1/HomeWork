@@ -15,6 +15,6 @@ public class InTelegramBotServiceImpl implements CommandService {
 
     @Override
     public Command getCommands(String text) {
-        return Reference.COMMAND_LINE_PARSER.parse(text);
+        return Reference.COMMAND_LINE_PARSER.createCommand(text);
     }
 }

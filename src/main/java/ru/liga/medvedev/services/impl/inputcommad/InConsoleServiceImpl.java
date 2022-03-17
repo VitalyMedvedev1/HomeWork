@@ -22,7 +22,7 @@ public class InConsoleServiceImpl implements CommandService {
             while (true) {
                 String inputConsoleCommand = scanner.nextLine();
                 if (!inputConsoleCommand.equals(EXIT)) {
-                    Command command = Reference.COMMAND_LINE_PARSER.parse(inputConsoleCommand);
+                    Command command = Reference.COMMAND_LINE_PARSER.createCommand(inputConsoleCommand);
                     if (command.getErrorMessage() != null) {
                         return command;
                     } else {

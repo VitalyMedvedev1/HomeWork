@@ -23,9 +23,9 @@ public class Command {
     private String currency;
     private String period;
     private String errorMessage;
-    private LocalDate localDate;
     private String algorithmName;
     private String outputType;
+    private LocalDate localDate;
 
     public static class Builder implements CommandBuilder {
         private Command inputCommand;
@@ -35,11 +35,11 @@ public class Command {
         }
 
         @Override
-        public Builder validationLength(int commandLength, String rateCommand) throws RuntimeException{
+        public Builder validationLength(int commandLength, String rateCommand) throws RuntimeException {
             if (!((commandLength == COMMAND_LENGTH || commandLength == COMMAND_LENGTH_MAX) && rateCommand.equalsIgnoreCase(inputCommand.getInCommand()))) {
                 throw new RuntimeException("Неверный формат строки!\n" +
                         "Доступный формат!\n" +
-                        "'rate TRY -date 22.02.2030 -alg moon'\n" +
+                        "'rate TRY -date 22.02.2030 -alg moon -output list'\n" +
                         "Попробуйте ввести снова");
             }
             return this;
@@ -100,6 +100,7 @@ public class Command {
                             "Доступный dd.MM.yyyy");
                 }
             } else {
+                period = date;
                 if (equalsInEnum(period.toUpperCase(), RatePeriods.class)) {
                     throw new RuntimeException("Неверный формат периода!\n" +
                             "Формат периода:\n" +

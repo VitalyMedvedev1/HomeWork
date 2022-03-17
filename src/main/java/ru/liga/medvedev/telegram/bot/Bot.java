@@ -4,20 +4,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
-import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
-import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.telegram.bot.command.HelpCommand;
 import ru.liga.medvedev.telegram.bot.command.StartCommand;
+import ru.liga.medvedev.telegram.bot.nonCommand.AnswerMessage;
 import ru.liga.medvedev.telegram.bot.nonCommand.NonCommand;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 
-public final class Bot extends TelegramLongPollingCommandBot {
+public final class Bot extends TelegramLongPollingCommandBot implements AnswerMessage {
     private Logger logger = LoggerFactory.getLogger(Bot.class);
     private String BOT_TOKEN;
     private String BOT_NAME;
@@ -43,12 +40,37 @@ public final class Bot extends TelegramLongPollingCommandBot {
 
     @Override
     public void processNonCommandUpdate(Update update) {
-        nonCommand.nonCommandExecute(update);
+/*        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(String.valueOf(update.getMessage().getChatId()));
+        String text = null;
+        try {
+            text = new String(nonCommand.nonCommandExecute(update), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        sendMessage.setText(text);
+
+        try {
+            execute(sendMessage);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }*/
+        nonCommand.nonCommandExecute(update, this);
     }
 
     @Override
     public String getBotToken() {
         return BOT_TOKEN;
+    }
+
+    @Override
+    public void answer(String message, Long ChatId) {
+
+    }
+
+    @Override
+    public void answer(File file, Long ChatId) {
+
     }
 
 //    @Override

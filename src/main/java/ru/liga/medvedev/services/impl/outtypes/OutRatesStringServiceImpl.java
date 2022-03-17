@@ -9,6 +9,6 @@ import java.util.List;
 public class OutRatesStringServiceImpl implements OutRateStatistic {
     @Override
     public String outRateStatistic(Command command, List<Rate> listRates) {
-        return null;
+        return listRates.toString();
     }
 }

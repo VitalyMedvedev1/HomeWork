@@ -75,7 +75,7 @@ public final class Bot extends TelegramLongPollingCommandBot implements AnswerMe
             SendPhoto sendPhoto = new SendPhoto();
             sendPhoto.setChatId(String.valueOf(chatId));
             try (InputStream inputStream = new ByteArrayInputStream(message)) {
-                sendPhoto.setPhoto(new InputFile(inputStream, "Rate predict"));
+                sendPhoto.setPhoto(new InputFile(inputStream, "Rates predict"));
                 execute(sendPhoto);
             } catch (IOException | TelegramApiException e) {
                 e.printStackTrace();

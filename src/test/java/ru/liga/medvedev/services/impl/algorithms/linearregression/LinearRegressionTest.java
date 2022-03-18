@@ -1,4 +1,3 @@
-/*
 package ru.liga.medvedev.services.impl.algorithms.linearregression;
 
 import org.junit.jupiter.api.Test;
@@ -20,16 +19,17 @@ class LinearRegressionTest {
     @Test
     public void generateRate() {
         Command command = SpringConfiguration.COMMAND_CONTROLLER.getCommand("rate USD -Date 13.03.2022 -alg moon");
-        List<List<String>> list = SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(command.getCurrency());
-        listRate = SpringConfiguration.RATE_DATA_MAPPER.mapRate(list, );
+        List<List<String>> list = SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(command.getListCurrency().get(0));
+        listRate = SpringConfiguration.RATE_DATA_MAPPER.mapRate(list, command.getListCurrency().get(0));
 
         linearRegressionService.generateStatisticRateCurrency(listRate, command);
 
     }
 
+    @Test
     public Double getDayPlusWeek(LocalDate localDate) {
         String day = String.valueOf(localDate.getDayOfMonth());
         Double d = Double.parseDouble(localDate.getMonthValue() + String.valueOf(localDate.getDayOfMonth()));
         return Double.parseDouble(localDate.getMonthValue() + String.valueOf(localDate.getDayOfMonth()));
     }
-}*/
+}

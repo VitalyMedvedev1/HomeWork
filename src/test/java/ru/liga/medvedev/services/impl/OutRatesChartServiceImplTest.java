@@ -20,15 +20,14 @@ class OutRatesChartServiceImplTest {
     RateAlgorithmService actualAlgorithm = new ActualAlgorithmImpl();
     OutRatesChartServiceImpl outRatesChartService = new OutRatesChartServiceImpl();
 
-/*    @Test
+    @Test
     public void generateRate() {
         Command command = SpringConfiguration.COMMAND_CONTROLLER.getCommand("rate USD -Date 17.03.2022 -alg moon");
         List<List<String>> list = SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(command.getCurrency());
-        listRate = SpringConfiguration.RATE_DATA_MAPPER.mapRate(list);
+        listRate = SpringConfiguration.RATE_DATA_MAPPER.mapRate(list, command.getListCurrency().get(0));
         listRate = actualAlgorithm.generateStatisticRateCurrency(listRate, command);
-        outRatesChartService.outRateStatistic(command, listRate, "USD");
 
 
         System.out.println(listRate);
-    }*/
+    }
 }

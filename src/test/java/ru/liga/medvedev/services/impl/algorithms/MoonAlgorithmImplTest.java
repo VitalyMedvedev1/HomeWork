@@ -1,4 +1,3 @@
-/*
 package ru.liga.medvedev.services.impl.algorithms;
 
 import org.junit.jupiter.api.Test;
@@ -17,10 +16,10 @@ class MoonAlgorithmImplTest {
     @Test
     public void generateRate() {
         Command command = SpringConfiguration.COMMAND_CONTROLLER.getCommand("rate USD -Date 19.03.2022 -alg moon");
-        List<List<String>> list = SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(command.getCurrency());
-        listRate = SpringConfiguration.RATE_DATA_MAPPER.mapRate(list, );
+        List<List<String>> list = SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(command.getListCurrency().get(0));
+        listRate = SpringConfiguration.RATE_DATA_MAPPER.mapRate(list, command.getListCurrency().get(0));
         LocalDate localDate = command.getLocalDate();
         List<Rate> newRateStatistic = moonAlgorithm.generateStatisticRateCurrency(listRate, command);
         System.out.println("123");
     }
-}*/
+}

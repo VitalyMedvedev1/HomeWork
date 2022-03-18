@@ -10,6 +10,10 @@ import ru.liga.medvedev.domain.enums.RatePeriods;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -21,6 +25,7 @@ public class Command {
 
     private final String inCommand = "RATE";
     private String currency;
+    private List<String> listCurrency = new ArrayList<>();
     private String period;
     private String errorMessage;
     private String algorithmName;
@@ -55,6 +60,23 @@ public class Command {
             } else {
                 inputCommand.currency = currency;
             }
+            return this;
+        }
+
+        @Override
+        public Builder validationCurrencies(String currency) {
+            Arrays.stream(currency.split(","))
+                    .forEach(c -> {
+                        if (equalsInEnum(c, RateCurrencies.class)) {
+                            throw new RuntimeException("Неверный формат валюты!\n" +
+                                    "Доступные валюты:\n " +
+                                    "USD, TRY, EUR, BGN, AMD\n" +
+                                    "Попробуйте ввести снова");
+                        }
+                        else {
+                            inputCommand.getListCurrency().add(c);
+                        }
+                    });
             return this;
         }
 

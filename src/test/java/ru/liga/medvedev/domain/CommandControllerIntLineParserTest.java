@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import static org.junit.jupiter.api.Assertions.*;
+
 class CommandControllerIntLineParserTest {
 
     private Command command = new Command();
@@ -13,19 +15,27 @@ class CommandControllerIntLineParserTest {
     @Test
     void errorLengthTest() {
         command = commandLineParser.createCommand("123 123 123");
-        Assertions.assertNotNull(command.getErrorMessage());
+        assertNotNull(command.getErrorMessage());
     }
 
     @Test
     public void parseCreateCommandTest(){
         command = commandLineParser.createCommand("rate TRY -date 22.02.2030 -alg moon");
-        Assertions.assertEquals("RATE", command.getInCommand());
-        Assertions.assertEquals("TRY", command.getCurrency());
-        Assertions.assertEquals("DATE", command.getPeriod());
-        Assertions.assertEquals(command.getLocalDate(), LocalDate.parse("22.02.2030", Reference.INPUT_DATE_FORMATTER));
-        Assertions.assertEquals("MOON", command.getAlgorithmName());
-        Assertions.assertEquals("DEFAULT", command.getOutputType());
+        assertEquals("RATE", command.getInCommand());
+//        assertEquals("TRY", command.getCurrency());
+        assertEquals(command.getListCurrency().get(0), "TRY");
+        assertEquals("DATE", command.getPeriod());
+        assertEquals(command.getLocalDate(), LocalDate.parse("22.02.2030", Reference.INPUT_DATE_FORMATTER));
+        assertEquals("MOON", command.getAlgorithmName());
+        assertEquals("DEFAULT", command.getOutputType());
         command = commandLineParser.createCommand("rate TRY -date 22.02.2030 -alg moon -out list");
-        Assertions.assertEquals("LIST", command.getOutputType());
+        assertEquals("LIST", command.getOutputType());
+    }
+
+    @Test
+    public void parseCreateCommandTestWithMultiValue(){
+        command = commandLineParser.createCommand("rate TRY,USD,EUR -date 22.02.2030 -alg moon");
+        System.out.println(command);
+
     }
 }

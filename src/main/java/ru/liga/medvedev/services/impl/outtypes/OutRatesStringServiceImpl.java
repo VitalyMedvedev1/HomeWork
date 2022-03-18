@@ -6,6 +6,8 @@ import ru.liga.medvedev.controller.OutRateStatistic;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
@@ -13,9 +15,21 @@ import java.util.List;
 @Service("OutRatesStringService")
 public class OutRatesStringServiceImpl implements OutRateStatistic {
     @Override
-    public byte[] outRateStatistic(Command command, List<Rate> listRates) {
-        log.debug("Формирование стринги ответа статистики\n"+
+    public byte[] outRateStatistic(Command command, List<List<Rate>> listRates) {
+        log.debug("Формирование стринги ответа статистики\n" +
                 listRates + "\nна период - " + command.getPeriod());
-        return listRates.toString().getBytes(StandardCharsets.UTF_8);
+        byte[] outMessageByte = null;
+        try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
+            for (List<Rate> listRate : listRates) {
+                outStream.write(("Статистика по валюте - " + listRate.get(0).getCurrency() + "\n").getBytes(StandardCharsets.UTF_8));
+                outStream.write(listRate.toString().getBytes(StandardCharsets.UTF_8));
+                outStream.write("\n\n\n".getBytes(StandardCharsets.UTF_8));
+            }
+            outMessageByte = outStream.toByteArray();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return outMessageByte;
     }
+
 }

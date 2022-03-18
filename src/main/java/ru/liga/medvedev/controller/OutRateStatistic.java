@@ -6,5 +6,5 @@ import ru.liga.medvedev.domain.Rate;
 import java.util.List;
 
 public interface OutRateStatistic {
-    byte[] outRateStatistic(Command command, List<Rate> listRates);
+    byte[] outRateStatistic(Command command, List<List<Rate>> listRates);
 }

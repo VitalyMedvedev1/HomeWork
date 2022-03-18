@@ -5,5 +5,5 @@ import ru.liga.medvedev.domain.Rate;
 import java.util.List;
 
 public interface RateDataMapper {
-    List<Rate> mapRate(List<List<String>> listData);
+    List<Rate> mapRate(List<List<String>> listData, String currency);
 }

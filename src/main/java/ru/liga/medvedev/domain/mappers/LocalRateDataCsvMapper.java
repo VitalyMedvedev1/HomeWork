@@ -18,7 +18,7 @@ public class LocalRateDataCsvMapper implements RateDataMapper {
     private static final NumberFormat numberFormat = NumberFormat.getInstance();
 
     @Override
-    public List<Rate> mapRate(List<List<String>> listData) {
+    public List<Rate> mapRate(List<List<String>> listData, String currency) {
         log.debug("Начало мапинга валютной статистики");
         List<Rate> listRates = new ArrayList<>();
         List<String> headers = listData.get(Reference.HEADER_INDEX);
@@ -38,7 +38,7 @@ public class LocalRateDataCsvMapper implements RateDataMapper {
                             nominal = Double.parseDouble(String.valueOf(numberFormat.parse(listStrRate.get(j))));
                         }
                     }
-                    listRates.add(new Rate(localDate, course / nominal));
+                    listRates.add(new Rate(currency, localDate, course / nominal));
                 }
             }
         } catch (ParseException e) {

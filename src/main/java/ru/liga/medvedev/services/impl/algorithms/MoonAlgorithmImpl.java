@@ -25,11 +25,12 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
         int MOON_PHASE_DAYS = 90;
+        String currency = listRate.get(0).getCurrency();
         log.debug("Формирование статистики по мистическому алгоритму");
         return generateRateMoonStatistic(listRate.stream()
                         .limit(MOON_PHASE_DAYS)
                         .collect(Collectors.toCollection(TreeSet::new)),
-                getMoonPhasePredict(listRate.get(0).getDate()), command);
+                getMoonPhasePredict(listRate.get(0).getDate()), command, currency);
     }
 
     private List<LocalDate> getMoonPhasePredict(LocalDate lastDateRate) {
@@ -49,11 +50,12 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
         return moonPhaseDate;
     }
 
-    private List<Rate> generateRateMoonStatistic(Set<Rate> setRate, List<LocalDate> listMoonPhaseDate, Command command) {
+    private List<Rate> generateRateMoonStatistic(Set<Rate> setRate, List<LocalDate> listMoonPhaseDate, Command command, String currency) {
         log.debug("Формирование списка статистики по датам полнолуний");
         LinkedList<Rate> listRate = new LinkedList<>();
         LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(command);
         listRate.add(new Rate(
+                currency,
                 localDate.plusDays(Reference.DAY),
                 Precision.round((setRate.stream()
                         .filter(rate -> listMoonPhaseDate.contains(rate.getDate()))
@@ -61,6 +63,7 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
                         .mapToDouble(Rate::getValue).sum()) / 3, 2)));
         for (int i = 2; i < Reference.COLLECTION_SIZE; i++) {
             listRate.add(new Rate(
+                    currency,
                     localDate.plusDays(i),
                     Precision.round(
                             listRate.getLast().getValue() + listRate.getLast().getValue() * ThreadLocalRandom.current().nextDouble(-0.1, 0.1),

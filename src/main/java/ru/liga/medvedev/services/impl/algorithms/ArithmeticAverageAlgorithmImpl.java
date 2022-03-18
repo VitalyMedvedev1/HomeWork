@@ -26,11 +26,12 @@ public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
     }
 
     private List<Rate> lastWeekStatistic(List<Rate> listRate) {
+        String currency = listRate.get(0).getCurrency();
         while (!listRate.get(0).getDate().equals(DATE_NOW_PLUS_WEEK)) {
             double avgCurs = listRate.stream()
                     .mapToDouble(Rate::getValue)
                     .average().orElse(0);
-            listRate.add(0, new Rate(listRate.get(0).getDate().plusDays(1), Precision.round(avgCurs, Reference.PRECISION)));
+            listRate.add(0, new Rate(currency, listRate.get(0).getDate().plusDays(1), Precision.round(avgCurs, Reference.PRECISION)));
             listRate.remove(listRate.size() - 1);
         }
         log.debug("Конец формирование статистики по среднему алгоритму - " + listRate);

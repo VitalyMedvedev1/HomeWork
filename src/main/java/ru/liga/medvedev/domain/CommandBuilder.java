@@ -5,6 +5,8 @@ public interface CommandBuilder {
 
     Command.Builder validationCurrency(String currency);
 
+    Command.Builder validationCurrencies(String currency);
+
     Command.Builder validationOutType(String[] commandLineParts);
 
     Command.Builder validationAlgorithmName(String algorithmName);

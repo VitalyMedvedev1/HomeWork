@@ -14,7 +14,7 @@ public class FileSystemCsvRepositoryImplTest {
     @Test
     public void test1(){
         Command command = SpringConfiguration.COMMAND_CONTROLLER.getCommand("rate USD -period week -alg moon");
-        List<List<String>> list = fileSystemCsvRepository.getRateDataRepository(command);
+        List<List<String>> list = fileSystemCsvRepository.getRateDataRepository(command.getCurrency());
         System.out.println("123");
     }
 }

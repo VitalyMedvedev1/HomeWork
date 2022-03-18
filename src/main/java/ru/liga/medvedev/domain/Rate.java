@@ -8,6 +8,7 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 public class Rate implements Comparable<Rate> {
+    private String currency;
     private LocalDate date;
     private Double value;
 

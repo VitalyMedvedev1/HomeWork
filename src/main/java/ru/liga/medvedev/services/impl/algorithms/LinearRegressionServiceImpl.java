@@ -23,10 +23,11 @@ public class LinearRegressionServiceImpl implements RateAlgorithmService {
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
         log.debug("Формирование статистики по линейному алгоритму");
+        String currency = listRate.get(0).getCurrency();
         listRate = RateStatisticFunctions.sortedRateList(listRate);
         List<double[]> listArrayRate = generateRateArraysLastMonth(listRate);
         LinearRegression linearRegression = new LinearRegression(listArrayRate.get(0), listArrayRate.get(1));
-        return genRateFromLinearRegressionFunction(linearRegression.slope(), linearRegression.intercept(), listRate.size(), command);
+        return genRateFromLinearRegressionFunction(linearRegression.slope(), linearRegression.intercept(), listRate.size(), command, currency);
     }
 
     private List<double[]> generateRateArraysLastMonth(List<Rate> listRate) {
@@ -44,12 +45,12 @@ public class LinearRegressionServiceImpl implements RateAlgorithmService {
         return listArrayRate;
     }
 
-    private List<Rate> genRateFromLinearRegressionFunction(double slope, double intercept, int rateStatisticSize, Command command) {
+    private List<Rate> genRateFromLinearRegressionFunction(double slope, double intercept, int rateStatisticSize, Command command, String currency) {
         log.debug("Получение стаистики по линейному алгоритму");
         List<Rate> listRate = new ArrayList<>();
         LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(command);
         for (int i = 0; i < Reference.COLLECTION_SIZE; i++) {
-            listRate.add(new Rate(localDate.plusDays(i), Precision.round((rateStatisticSize + i - intercept) / slope, Reference.PRECISION)));
+            listRate.add(new Rate(currency, localDate.plusDays(i), Precision.round((rateStatisticSize + i - intercept) / slope, Reference.PRECISION)));
         }
         log.debug("Стаистика по линейному алгоритму" + listRate);
         return listRate;

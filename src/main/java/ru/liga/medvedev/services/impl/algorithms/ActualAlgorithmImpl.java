@@ -27,6 +27,7 @@ public class ActualAlgorithmImpl implements RateAlgorithmService {
 
     public List<Rate> getRateStatistic(LocalDate localDate, List<Rate> listRate) {
         List<Rate> newRateStatistic = new LinkedList<>();
+        String currency = listRate.get(0).getCurrency();
         double avgCourse = 0d;
         for (int i = 0; i < Reference.COLLECTION_SIZE; i++) {
             LocalDate finalLocalDate = localDate;
@@ -34,7 +35,7 @@ public class ActualAlgorithmImpl implements RateAlgorithmService {
                     .filter(rate -> rate.getDate().equals(finalLocalDate.minusYears(2)) || rate.getDate().equals(finalLocalDate.minusYears(3)))
                     .mapToDouble(Rate::getValue)
                     .average().orElse(avgCourse);
-            newRateStatistic.add(new Rate(localDate, Precision.round(avgCourse, Reference.PRECISION)));
+            newRateStatistic.add(new Rate(currency, localDate, Precision.round(avgCourse, Reference.PRECISION)));
             localDate = localDate.plusDays(1);
         }
         log.debug("Конец формирование статистики по актуальному алгоритму" + newRateStatistic);

@@ -16,6 +16,7 @@ import java.util.HashMap;
 public class CommandControllerIntController implements CommandControllerInt {
 
     private final HashMap<String, CommandService> commandServiceHashMap = new HashMap<>();
+
     @Autowired
     public CommandControllerIntController(@Qualifier("InTelegramBotService") InTelegramBotServiceImpl inTelegramBotService,
                                           @Qualifier("InConsoleService") InConsoleServiceImpl inConsoleService) {

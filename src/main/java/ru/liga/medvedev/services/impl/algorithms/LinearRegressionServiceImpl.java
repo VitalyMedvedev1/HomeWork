@@ -35,8 +35,8 @@ public class LinearRegressionServiceImpl implements RateAlgorithmService {
         double[] predictVariable = new double[listRate.size()];
         double[] responseVariable = new double[listRate.size()];
         for (int i = 0; i < listRate.size(); i++) {
-            predictVariable[listRate.size() - i - 1] = listRate.get(i).getValue();
-            responseVariable[listRate.size() - i - 1] = listRate.size() - i;
+            predictVariable[listRate.size() - i - Reference.SECOND_INDEX] = listRate.get(i).getValue();
+            responseVariable[listRate.size() - i - Reference.SECOND_INDEX] = listRate.size() - i;
         }
         log.debug("Получение линейной функции");
         List<double[]> listArrayRate = Stream.of(predictVariable, responseVariable)

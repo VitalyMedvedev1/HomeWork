@@ -22,6 +22,9 @@ import java.util.stream.Collectors;
 @Component("MoonAlgorithm")
 public class MoonAlgorithmImpl implements RateAlgorithmService {
 
+    private static final int LAST_MOON_PHASE_COUNT = 3;
+    private static final double CALCULATION_PERCENTAGE = 0.1d;
+
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
         int MOON_PHASE_DAYS = 90;
@@ -56,17 +59,17 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
         LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(command);
         listRate.add(new Rate(
                 currency,
-                localDate.plusDays(Reference.DAY),
+                localDate,
                 Precision.round((setRate.stream()
                         .filter(rate -> listMoonPhaseDate.contains(rate.getDate()))
-                        .limit(3)
-                        .mapToDouble(Rate::getValue).sum()) / 3, 2)));
-        for (int i = 2; i < Reference.COLLECTION_SIZE; i++) {
+                        .limit(LAST_MOON_PHASE_COUNT)
+                        .mapToDouble(Rate::getValue).sum()) / LAST_MOON_PHASE_COUNT, Reference.PRECISION)));
+        for (int i = 1; i < Reference.COLLECTION_SIZE; i++) {
             listRate.add(new Rate(
                     currency,
                     localDate.plusDays(i),
                     Precision.round(
-                            listRate.getLast().getValue() + listRate.getLast().getValue() * ThreadLocalRandom.current().nextDouble(-0.1, 0.1),
+                            listRate.getLast().getValue() + listRate.getLast().getValue() * ThreadLocalRandom.current().nextDouble(-CALCULATION_PERCENTAGE, CALCULATION_PERCENTAGE),
                             Reference.PRECISION)));
         }
         log.debug("Спискок статистики по датам полнолуний" + listRate);

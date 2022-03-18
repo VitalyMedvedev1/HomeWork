@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import ru.liga.medvedev.controller.OutRateStatistic;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
-import ru.liga.medvedev.domain.enums.RateAlgorithms;
+import ru.liga.medvedev.domain.Reference;
 import ru.liga.medvedev.domain.enums.RatePeriods;
 
 import java.io.ByteArrayOutputStream;
@@ -23,13 +23,14 @@ public class OutRatesListServiceImpl implements OutRateStatistic {
         log.debug("Формирование списка ответа статистики\n" +
                 listRates + "\nна период - " + command.getPeriod());
         String periodStr = command.getPeriod().toUpperCase();
-        int period = periodStr.equals(String.valueOf(RatePeriods.TOMORROW)) || periodStr.equals(String.valueOf(RatePeriods.DATE)) ? 1 : periodStr.equals(String.valueOf(RatePeriods.WEEK)) ? 7 : 30;
+        int period = periodStr.equals(String.valueOf(RatePeriods.TOMORROW)) || periodStr.equals(String.valueOf(RatePeriods.DATE)) ? Reference.DAY
+                : periodStr.equals(String.valueOf(RatePeriods.WEEK)) ? Reference.WEEK : Reference.MONTH;
         byte[] outMessageByte = null;
         try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
             for (List<Rate> listRate : listRates) {
-                outStream.write(("Статистика по валюте - " + listRate.get(0).getCurrency() + "\n").getBytes(StandardCharsets.UTF_8));
+                outStream.write(("Статистика по валюте - " + listRate.get(Reference.HEADER_INDEX).getCurrency() + "\n").getBytes(StandardCharsets.UTF_8));
                 outStream.write(listRate.stream()
-                        .skip(command.getAlgorithmName().equals(RateAlgorithms.MOON.name()) || periodStr.equals(RatePeriods.DATE.name()) ? 0 : 1)
+                        .skip(periodStr.equals(RatePeriods.DATE.name()) ? 0 : 1)
                         .limit(period)
                         .map(Rate::toString)
                         .collect(Collectors.joining("\n")).getBytes(StandardCharsets.UTF_8));

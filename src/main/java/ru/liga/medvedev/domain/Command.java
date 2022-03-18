@@ -13,7 +13,6 @@ import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Data
 @AllArgsConstructor
@@ -44,21 +43,13 @@ public class Command {
             if (!((commandLength == COMMAND_LENGTH || commandLength == COMMAND_LENGTH_MAX) && rateCommand.equalsIgnoreCase(inputCommand.getInCommand()))) {
                 throw new RuntimeException("Неверный формат строки!\n" +
                         "Доступный формат!\n" +
-                        "'rate TRY -date 22.02.2030 -alg moon -output list'\n" +
+                        "команда - rate\n" +
+                        "валюты - TRY,USD,EUR,AMD,BGN\n" +
+                        "период - date/period\n" +
+                        "алгоритмы - moon/actual/average/liner\n" +
+                        "вывод - list/graph/...\n" +
+                        "Пример:\n rate USD,EUR,BGN -date 17.07.2022 alg liner -output graph\n" +
                         "Попробуйте ввести снова");
-            }
-            return this;
-        }
-
-        @Override
-        public Builder validationCurrency(String currency) {
-            if (equalsInEnum(currency, RateCurrencies.class)) {
-                throw new RuntimeException("Неверный формат валюты!\n" +
-                        "Доступные валюты:\n " +
-                        "USD, TRY, EUR, BGN, AMD\n" +
-                        "Попробуйте ввести снова");
-            } else {
-                inputCommand.currency = currency;
             }
             return this;
         }
@@ -72,8 +63,7 @@ public class Command {
                                     "Доступные валюты:\n " +
                                     "USD, TRY, EUR, BGN, AMD\n" +
                                     "Попробуйте ввести снова");
-                        }
-                        else {
+                        } else {
                             inputCommand.getListCurrency().add(c);
                         }
                     });

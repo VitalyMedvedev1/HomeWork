@@ -37,7 +37,6 @@ public final class Bot extends TelegramLongPollingCommandBot implements AnswerMe
         register(new HelpCommand("help", "Помощь"));
     }
 
-
     @Override
     public String getBotUsername() {
         return BOT_NAME;

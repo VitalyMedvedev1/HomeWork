@@ -3,8 +3,6 @@ package ru.liga.medvedev.domain;
 public interface CommandBuilder {
     Command.Builder validationLength(int commandLength, String rateCommand);
 
-    Command.Builder validationCurrency(String currency);
-
     Command.Builder validationCurrencies(String currency);
 
     Command.Builder validationOutType(String[] commandLineParts);

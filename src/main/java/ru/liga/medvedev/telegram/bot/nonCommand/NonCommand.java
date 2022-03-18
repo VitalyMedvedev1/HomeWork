@@ -18,44 +18,26 @@ public class NonCommand {
 
     public Map<byte[], Boolean> nonCommandExecute(String messageText) {
         logger.info("Строка команды от бота\n" + messageText);
+
         Command command = SpringConfiguration.COMMAND_CONTROLLER.getCommand(messageText);
         logger.info("Обработанная команда\n" + command);
+
         Map<byte[], Boolean> outMapMessage = new HashMap<>();
         List<List<Rate>> listRates = new ArrayList<>();
+
         if (command.getErrorMessage() != null) {
             outMapMessage.put(command.getErrorMessage().getBytes(StandardCharsets.UTF_8), true);
         } else {
             for (String currency : command.getListCurrency()
             ) {
-
                 List<Rate> listRate = SpringConfiguration.ALGORITHMS_RATE_CONTROLLER.generateStatisticRateCurrency(
                         SpringConfiguration.RATE_DATA_MAPPER.mapRate(
                                 SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(currency), currency), command);
                 listRates.add(listRate);
             }
             outMapMessage.put(SpringConfiguration.OUT_RATE_STATISTIC_CONTROLLER.outRateStatistic(command, listRates),
-                                                !command.getOutputType().equals(RateOutTypes.GRAPH.name()));
+                    !command.getOutputType().equals(RateOutTypes.GRAPH.name()));
         }
-        System.out.println("123");
         return outMapMessage;
     }
 }
-
-
-/*
-
-                if (command.getOutputType().equals(RateOutTypes.GRAPH.name())) {
-                    List<Rate> listRate = SpringConfiguration.ALGORITHMS_RATE_CONTROLLER.generateStatisticRateCurrency(
-                                            SpringConfiguration.RATE_DATA_MAPPER.mapRate(
-                                                    SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(currency)), command);
-                } else {
-
-
-*/
-
-                /*    outMapMessage.put(
-                            SpringConfiguration.OUT_RATE_STATISTIC_CONTROLLER.outRateStatistic(
-                                    command, SpringConfiguration.ALGORITHMS_RATE_CONTROLLER.generateStatisticRateCurrency(
-                                            SpringConfiguration.RATE_DATA_MAPPER.mapRate(
-                                                    SpringConfiguration.DATA_REPOSITORY_CONTROLLER.getRateDataRepository(currency)), command), currency),
-                            !command.getOutputType().equals(RateOutTypes.GRAPH.name()));*/

@@ -17,51 +17,52 @@ import ru.liga.medvedev.domain.Rate;
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Service("OutRatesChartService")
 public class OutRatesChartServiceImpl implements OutRateStatistic {
+    private final static Map<Integer, Color> mapColor = new HashMap<Integer, Color>() {{
+        put(0, Color.BLUE);
+        put(1, Color.RED);
+        put(2, Color.YELLOW);
+        put(3, Color.GRAY);
+        put(4, Color.GREEN);
+    }};
+
     @Override
     public byte[] outRateStatistic(Command command, List<List<Rate>> listRates) {
         log.debug("Формирование графика - картинки!!! для валюты");
         TimeSeriesCollection dataSet = new TimeSeriesCollection();
-/*        for (String cur : command.getListCurrency()
-        ) {
-            dataSet.addSeries(generateTimeSeries(listRates, cur));
-            dataSet.generateDataSet(listRates, command.getCurrency());
-        }*/
         for (List<Rate> listRate : listRates) {
             dataSet.addSeries(generateTimeSeries(listRate, listRate.get(0).getCurrency()));
         }
-        return generateChart(dataSet);
+        return generateChart(dataSet, listRates.size());
     }
 
     public TimeSeries generateTimeSeries(List<Rate> listRates, String currency) {
         log.debug("Формирование графика для валюты - " + currency +
                 "\nПо статистики" + listRates);
-//        TimeSeriesCollection dataSet = new TimeSeriesCollection();
         TimeSeries timeSeries = new TimeSeries(currency);
         listRates
                 .forEach(rate ->
                         timeSeries.add(new Day(rate.getDate().getDayOfMonth(), rate.getDate().getMonthValue(), rate.getDate().getYear()), rate.getValue()));
-//        dataSet.addSeries(timeSeries);
         log.debug("Конец формирования dataset");
         return timeSeries;
     }
 
-    private byte[] generateChart(TimeSeriesCollection dataSet) {
+    private byte[] generateChart(TimeSeriesCollection dataSet, int countCurrency) {
         log.debug("Начало формирования граффика");
         JFreeChart chart = ChartFactory.createTimeSeriesChart("Rates prediction", "date", "rate", dataSet, true, false, false);
 
         XYPlot plot = chart.getXYPlot();
         XYItemRenderer renderer = plot.getRenderer();
-        renderer.setSeriesPaint(0, Color.BLUE);
-        renderer.setSeriesFillPaint(0, Color.BLUE);
-        renderer.setSeriesPaint(1, Color.RED);
-        renderer.setSeriesFillPaint(1, Color.RED);
-        renderer.setSeriesPaint(2, Color.YELLOW);
-        renderer.setSeriesFillPaint(2, Color.YELLOW);
+        for (int i = 0; i < countCurrency; i++) {
+            renderer.setSeriesPaint(i, mapColor.get(i));
+            renderer.setSeriesFillPaint(i, mapColor.get(i));
+        }
 
         byte[] byteGraph;
         try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {

@@ -31,7 +31,7 @@ public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
             double avgCurs = listRate.stream()
                     .mapToDouble(Rate::getValue)
                     .average().orElse(0);
-            listRate.add(0, new Rate(currency, listRate.get(0).getDate().plusDays(1), Precision.round(avgCurs, Reference.PRECISION)));
+            listRate.add(Reference.HEADER_INDEX, new Rate(currency, listRate.get(0).getDate().plusDays(Reference.DAY), Precision.round(avgCurs, Reference.PRECISION)));
             listRate.remove(listRate.size() - 1);
         }
         log.debug("Конец формирование статистики по среднему алгоритму - " + listRate);

@@ -17,7 +17,6 @@ public class CommandLineParser {
         try {
             return new Command.Builder()
                     .validationLength(commandLineParts.length, commandLineParts[COMMAND_RATE_INDEX].toUpperCase())
-//                    .validationCurrency(commandLineParts[COMMAND_CUR_INDEX].toUpperCase())
                     .validationCurrencies(commandLineParts[COMMAND_CUR_INDEX].toUpperCase())
                     .validationAlgorithmName(commandLineParts[COMMAND_ALGORITHM_INDEX].toUpperCase())
                     .validationPeriod(commandLineParts[COMMAND_PERIOD_INDEX_FLAG].toUpperCase().replaceAll("\\W", ""), commandLineParts[COMMAND_PERIOD_DATE_INDEX].toUpperCase())

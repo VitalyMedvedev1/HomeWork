@@ -1,5 +1,6 @@
 package ru.liga.medvedev.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import ru.liga.medvedev.domain.Command;
@@ -14,6 +15,7 @@ import ru.liga.medvedev.services.impl.algorithms.MoonAlgorithmImpl;
 import java.util.HashMap;
 import java.util.List;
 
+@Slf4j
 @Controller("AlgorithmsController")
 public class AlgorithmsRateController implements AlgorithmsRate {
 
@@ -31,6 +33,7 @@ public class AlgorithmsRateController implements AlgorithmsRate {
 
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
+        log.info("Начачало работы расчета статистики, алгоритм: " + command.getAlgorithmName());
         return algorithmServiceHashMap.get(command.getAlgorithmName()).generateStatisticRateCurrency(listRate, command);
     }
 }

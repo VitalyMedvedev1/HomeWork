@@ -1,5 +1,6 @@
 package ru.liga.medvedev.services.impl.algorithms;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.math3.util.Precision;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Command;
@@ -13,12 +14,14 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component("AvgArithmeticAlgorithm")
 public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
     private final LocalDate DATE_NOW_PLUS_WEEK = LocalDate.now().plusMonths(1);
 
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
+        log.debug("Формирование статистики по среднему алгоритму");
         return lastWeekStatistic(RateStatisticFunctions.sortedRateList(listRate));
     }
 
@@ -30,6 +33,7 @@ public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
             listRate.add(0, new Rate(listRate.get(0).getDate().plusDays(1), Precision.round(avgCurs, Reference.PRECISION)));
             listRate.remove(listRate.size() - 1);
         }
+        log.debug("Конец формирование статистики по среднему алгоритму - " + listRate);
         return listRate.stream()
                 .sorted(Comparator.comparing(Rate::getDate))
                 .collect(Collectors.toList());

@@ -1,5 +1,6 @@
 package ru.liga.medvedev.domain.mappers;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.Reference;
@@ -10,6 +11,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Component("LocalCsvMapper")
 public class LocalRateDataCsvMapper implements RateDataMapper {
 
@@ -17,6 +19,7 @@ public class LocalRateDataCsvMapper implements RateDataMapper {
 
     @Override
     public List<Rate> mapRate(List<List<String>> listData) {
+        log.debug("Начало мапинга валютной статистики");
         List<Rate> listRates = new ArrayList<>();
         List<String> headers = listData.get(Reference.HEADER_INDEX);
         try {
@@ -42,6 +45,7 @@ public class LocalRateDataCsvMapper implements RateDataMapper {
             System.out.print("\n      Неверный формат курса валюты в файле\n");
             throw new RuntimeException();
         }
+        log.debug("Конец мапинга валютной статистики");
         return listRates;
     }
 }

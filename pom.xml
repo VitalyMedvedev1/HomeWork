@@ -28,6 +28,9 @@
         <commons-suncalc>3.5</commons-suncalc>
         <jfreechart>1.5.3</jfreechart>
         <poi-ooxml>4.1.2</poi-ooxml>
+        <telegrambots>5.2.0</telegrambots>
+        <poi-ooxml>4.1.2</poi-ooxml>
+        <telegram-spring-boot-starter>0.26</telegram-spring-boot-starter>
     </properties>
 
     <dependencies>
@@ -85,19 +88,19 @@
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambots</artifactId>
-            <version>5.2.0</version>
+            <version>${telegrambots}</version>
         </dependency>
 
         <dependency>
             <groupId>org.telegram</groupId>
             <artifactId>telegrambotsextensions</artifactId>
-            <version>5.2.0</version>
+            <version>${telegrambots}</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.xabgesagtx</groupId>
             <artifactId>telegram-spring-boot-starter</artifactId>
-            <version>0.26</version>
+            <version>${telegram-spring-boot-starter}</version>
         </dependency>
 
         <dependency>
@@ -119,8 +122,19 @@
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
-            <version>4.1.2</version>
-            <scope>test</scope>
+            <version>${poi-ooxml}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.36</version>
+        </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.11</version>
         </dependency>
     </dependencies>
 

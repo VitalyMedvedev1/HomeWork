@@ -1,5 +1,8 @@
 package ru.liga.medvedev.domain;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class CommandLineParser {
     private static final String COMMAND_SPLITTER = " ";
     private static final int COMMAND_RATE_INDEX = 0;
@@ -9,6 +12,7 @@ public class CommandLineParser {
     private static final int COMMAND_ALGORITHM_INDEX = 5;
 
     public Command createCommand(String commandInputStr) {
+        log.debug("Парсинг и создание команды из строки");
         String[] commandLineParts = commandInputStr.trim().split(COMMAND_SPLITTER);
         try {
             return new Command.Builder()

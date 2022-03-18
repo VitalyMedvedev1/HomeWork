@@ -14,8 +14,9 @@ public class NonCommand {
     private final Logger logger = LoggerFactory.getLogger(NonCommand.class);
 
     public Map<byte[], Boolean> nonCommandExecute(String messageText) {
-        logger.debug("Строка команды\n" + messageText);
+        logger.info("Строка команды от бота\n" + messageText);
         Command command = SpringConfiguration.COMMAND_CONTROLLER.getCommand(messageText);
+        logger.info("Обработанная команда\n" + command);
         Map<byte[], Boolean> outMapMessage = new HashMap<>();
         if (command.getErrorMessage() != null) {
             outMapMessage.put(command.getErrorMessage().getBytes(StandardCharsets.UTF_8), true);

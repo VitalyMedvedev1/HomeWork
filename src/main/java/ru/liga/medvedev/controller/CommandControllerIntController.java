@@ -1,5 +1,6 @@
 package ru.liga.medvedev.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -10,6 +11,7 @@ import ru.liga.medvedev.services.impl.inputcommad.InTelegramBotServiceImpl;
 
 import java.util.HashMap;
 
+@Slf4j
 @Component("CommandController")
 public class CommandControllerIntController implements CommandControllerInt {
 
@@ -28,6 +30,7 @@ public class CommandControllerIntController implements CommandControllerInt {
 
     @Override
     public Command getCommand(String text) {
+        log.info("Начало обработки команды для работы: " + text);
         return commandServiceHashMap.get("BOT").getCommands(text);
     }
 }

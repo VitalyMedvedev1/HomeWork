@@ -1,5 +1,6 @@
 package ru.liga.medvedev.controller;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @Component("OutStatisticController")
 public class OutRateStatisticController implements OutRateStatistic {
 
@@ -29,6 +31,7 @@ public class OutRateStatisticController implements OutRateStatistic {
 
     @Override
     public byte[] outRateStatistic(Command command, List<Rate> listRates) {
+        log.info("Начало обработки данных статистики для ответа: " + command.getOutputType());
         return outRateStatisticMap.get(command.getOutputType()).outRateStatistic(command, listRates);
     }
 }

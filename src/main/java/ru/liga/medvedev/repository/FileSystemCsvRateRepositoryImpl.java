@@ -1,6 +1,8 @@
 package ru.liga.medvedev.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ru.liga.medvedev.controller.DataRateRepository;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Reference;
@@ -15,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Component("LocalRepository")
 public class FileSystemCsvRateRepositoryImpl implements DataRateRepository, CsvRepository {
 
@@ -28,7 +31,7 @@ public class FileSystemCsvRateRepositoryImpl implements DataRateRepository, CsvR
 
     @Override
     public List<List<String>> ReadLocalCsv(String currency) {
-//        ClassLoader classLoader = getClass().getClassLoader();
+        log.debug("Начало чтения данных из локального файла по валюте - " + currency);
         URL url = getClass().getClassLoader().getResource(currency + "_NEW" + EXTENSION);//!!!!!!!!!!!!!!!!!!!!!!!!!
         if (url == null) {
             throw new RuntimeException("Файл не найден");
@@ -42,12 +45,13 @@ public class FileSystemCsvRateRepositoryImpl implements DataRateRepository, CsvR
         for (int i = Reference.HEADER_INDEX + 1; i < fileContent.size(); i++) {
             result.add(Arrays.asList(fileContent.get(i).split(DELIMITER)));
         }
-
+        log.debug("Конец чтения данных из локального файла по валюте - " + currency);
         return result;
     }
 
     private List<String> readFile(URL url) {
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(url.getFile()))) {
+            log.debug("Чтение данных из файла");
             return bufferedReader.lines()
                     .collect(Collectors.toList());
         } catch (IOException e) {

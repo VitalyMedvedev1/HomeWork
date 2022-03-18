@@ -1,9 +1,11 @@
 package ru.liga.medvedev;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
@@ -15,9 +17,13 @@ import ru.liga.medvedev.domain.mappers.LocalRateDataCsvMapper;
 import ru.liga.medvedev.domain.mappers.RateDataMapper;
 import ru.liga.medvedev.telegram.bot.Bot;
 
+import java.io.IOException;
+import java.util.Properties;
+
 @Configuration
 @ComponentScan("ru.liga.medvedev")
 @PropertySource("classpath:resource.properties")
+@Slf4j
 public class SpringConfiguration {
     public static final AnnotationConfigApplicationContext APPLICATION_CONTEXT = new AnnotationConfigApplicationContext(SpringConfiguration.class);
     public static final CommandControllerIntController COMMAND_CONTROLLER = APPLICATION_CONTEXT.getBean("CommandController", CommandControllerIntController.class);
@@ -28,9 +34,16 @@ public class SpringConfiguration {
 
     public static void main(String[] args) {
         try {
+            log.info("----------------Начало работы----------------------------");
+            log.info("----------------Старт Spring Dependency------------------");
             TelegramBotsApi telegramBotsApi = new TelegramBotsApi(DefaultBotSession.class);
-            telegramBotsApi.registerBot(new Bot("5186434723:AAHHel-2nbQFIXwfx75oa7vmA_dP_m-5xKs", "medvedevtestTG"));
-        } catch (TelegramApiException e) {
+            log.info("----------------Старт Telegram Bot App-------------------");
+            Properties properties = new Properties();
+            properties.load(new ClassPathResource("resource.properties").getInputStream());
+
+            telegramBotsApi.registerBot(new Bot(properties.getProperty("BOT_TOKEN"), properties.getProperty("BOT_NAME")));
+            log.info("----------------Telegram Bot зарегистрирован--------------");
+        } catch (TelegramApiException | IOException e) {
             e.printStackTrace();
         }
     }

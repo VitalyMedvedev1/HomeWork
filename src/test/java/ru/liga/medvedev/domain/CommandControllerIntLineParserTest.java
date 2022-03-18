@@ -5,10 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
-import static junit.framework.TestCase.assertNotNull;
-import static junit.framework.TestCase.assertTrue;
-import static org.junit.Assert.assertThat;
-
 class CommandControllerIntLineParserTest {
 
     private Command command = new Command();

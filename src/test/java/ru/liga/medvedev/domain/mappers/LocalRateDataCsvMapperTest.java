@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.liga.medvedev.CreateDataList;
+import ru.liga.medvedev.CreateRandomDataListEmulLoad;
 import ru.liga.medvedev.controller.DataRateRateRepositoryController;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.repository.FileSystemCsvRateRepositoryImpl;
@@ -20,7 +20,7 @@ class LocalRateDataCsvMapperTest {
     private final FileSystemCsvRateRepositoryImpl fileSystemCsvRateRepository = Mockito.mock(FileSystemCsvRateRepositoryImpl.class);
     private final DataRateRateRepositoryController dataRateRateRepositoryController = new DataRateRateRepositoryController(fileSystemCsvRateRepository);
     private final LocalRateDataCsvMapper localRateDataCsvMapper = new LocalRateDataCsvMapper();
-    List<List<String>> listRates = CreateDataList.emulationListFromLocalFile();
+    List<List<String>> listRates = CreateRandomDataListEmulLoad.emulationListFromLocalFile();
 
     @Test
     void MappingFromRandomStatisticData() {

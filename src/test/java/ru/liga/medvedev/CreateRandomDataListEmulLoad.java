@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class CreateDataList {
+public class CreateRandomDataListEmulLoad {
     public static Random random = new Random();
     public static String FILE_HEADER = "nominal;data;curs;cdx";
 

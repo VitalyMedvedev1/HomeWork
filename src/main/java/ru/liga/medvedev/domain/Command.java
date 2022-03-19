@@ -33,6 +33,7 @@ public class Command {
 
     public static class Builder implements CommandBuilder {
         private final Command inputCommand;
+        private static final String COMMAND_PATH_SPLITTER = ",";
 
         public Builder() {
             this.inputCommand = new Command();
@@ -41,28 +42,17 @@ public class Command {
         @Override
         public Builder validationLength(int commandLength, String rateCommand) throws RuntimeException {
             if (!((commandLength == COMMAND_LENGTH || commandLength == COMMAND_LENGTH_MAX) && rateCommand.equalsIgnoreCase(inputCommand.getInCommand()))) {
-                throw new RuntimeException("Неверный формат строки!\n" +
-                        "Доступный формат!\n" +
-                        "команда - rate\n" +
-                        "валюты - TRY,USD,EUR,AMD,BGN\n" +
-                        "период - date/period\n" +
-                        "алгоритмы - moon/actual/average/liner\n" +
-                        "вывод - list/graph/...\n" +
-                        "Пример:\n rate USD,EUR,BGN -date 17.07.2022 alg liner -output graph\n" +
-                        "Попробуйте ввести снова");
+                throw new RuntimeException(StaticParams.ERROR_LENGTH_MESSAGE);
             }
             return this;
         }
 
         @Override
         public Builder validationCurrencies(String currency) {
-            Arrays.stream(currency.split(","))
+            Arrays.stream(currency.split(COMMAND_PATH_SPLITTER))
                     .forEach(c -> {
                         if (equalsInEnum(c, RateCurrencies.class)) {
-                            throw new RuntimeException("Неверный формат валюты!\n" +
-                                    "Доступные валюты:\n " +
-                                    "USD, TRY, EUR, BGN, AMD\n" +
-                                    "Попробуйте ввести снова");
+                            throw new RuntimeException(StaticParams.ERROR_CURRENCY_MESSAGE);
                         } else {
                             inputCommand.getListCurrency().add(c);
                         }
@@ -75,10 +65,7 @@ public class Command {
             if (commandLineParts.length == COMMAND_LENGTH_MAX) {
                 String outType = commandLineParts[COMMAND_OUT_TYPE_INDEX].toUpperCase();
                 if (equalsInEnum(outType.toUpperCase(), RateOutTypes.class)) {
-                    throw new RuntimeException("Неверный формат типа вывода!\n" +
-                            "Доступные названия:\n" +
-                            "LIST, GRAPH или без флага -output\n" +
-                            "Попробуйте ввести снова");
+                    throw new RuntimeException(StaticParams.ERROR_OUT_TYPE_MESSAGE);
                 } else {
                     inputCommand.outputType = outType;
                 }
@@ -91,10 +78,7 @@ public class Command {
         @Override
         public Builder validationAlgorithmName(String algorithmName) {
             if (equalsInEnum(algorithmName.toUpperCase(), RateAlgorithms.class)) {
-                throw new RuntimeException("Неверный формат алгоритма!\n" +
-                        "Доступные названия алгоритмов:\n" +
-                        "MOON, AVERAGE, LINER, ACTUAL\n" +
-                        "Попробуйте ввести снова");
+                throw new RuntimeException(StaticParams.ERROR_ALGORITHM_MESSAGE);
             } else {
                 inputCommand.algorithmName = algorithmName;
             }
@@ -108,16 +92,12 @@ public class Command {
                     inputCommand.localDate = LocalDate.parse(date, StaticParams.INPUT_DATE_FORMATTER);
                     inputCommand.period = period;
                 } catch (DateTimeParseException e) {
-                    throw new RuntimeException("Неверный формат введенной даты!\n" +
-                            "Доступный dd.MM.yyyy");
+                    throw new RuntimeException(StaticParams.ERROR_DATE_FORMAT_MESSAGE);
                 }
             } else {
                 period = date;
                 if (equalsInEnum(period.toUpperCase(), RatePeriods.class)) {
-                    throw new RuntimeException("Неверный формат периода!\n" +
-                            "Формат периода:\n" +
-                            "week/tomorrow/month\n" +
-                            "Попробуйте ввести снова");
+                    throw new RuntimeException(StaticParams.ERROR_PERIOD_MESSAGE);
                 } else {
                     inputCommand.period = period;
                 }

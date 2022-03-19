@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.RateStatisticFunctions;
-import ru.liga.medvedev.domain.Reference;
+import ru.liga.medvedev.domain.StaticParams;
 import ru.liga.medvedev.services.RateAlgorithmService;
 
 import java.time.LocalDate;
@@ -27,16 +27,16 @@ public class ActualAlgorithmImpl implements RateAlgorithmService {
 
     public List<Rate> getRateStatistic(LocalDate localDate, List<Rate> listRate) {
         List<Rate> newRateStatistic = new LinkedList<>();
-        String currency = listRate.get(Reference.HEADER_INDEX).getCurrency();
+        String currency = listRate.get(StaticParams.HEADER_INDEX).getCurrency();
         double avgCourse = 0d;
-        for (int i = 0; i < Reference.COLLECTION_SIZE; i++) {
+        for (int i = 0; i < StaticParams.COLLECTION_SIZE; i++) {
             LocalDate finalLocalDate = localDate;
             avgCourse = new TreeSet<>(listRate).stream()
                     .filter(rate -> rate.getDate().equals(finalLocalDate.minusYears(2)) || rate.getDate().equals(finalLocalDate.minusYears(3)))
                     .mapToDouble(Rate::getValue)
                     .average().orElse(avgCourse);
-            newRateStatistic.add(new Rate(currency, localDate, Precision.round(avgCourse, Reference.PRECISION)));
-            localDate = localDate.plusDays(Reference.DAY);
+            newRateStatistic.add(new Rate(currency, localDate, Precision.round(avgCourse, StaticParams.PRECISION)));
+            localDate = localDate.plusDays(StaticParams.DAY);
         }
         log.debug("Конец формирование статистики по актуальному алгоритму" + newRateStatistic);
         return new ArrayList<>(newRateStatistic).stream()

@@ -15,7 +15,7 @@ public class RateStatisticFunctions {
         log.debug("Сортировка статистики - " + listRate);
         return listRate.stream()
                 .sorted(Comparator.comparing(Rate::getDate).reversed())
-                .limit(Reference.COLLECTION_SIZE)
+                .limit(StaticParams.COLLECTION_SIZE)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 

@@ -105,7 +105,7 @@ public class Command {
         public Builder validationPeriod(String period, String date) {
             if (period.equals(RatePeriods.DATE.toString())) {
                 try {
-                    inputCommand.localDate = LocalDate.parse(date, Reference.INPUT_DATE_FORMATTER);
+                    inputCommand.localDate = LocalDate.parse(date, StaticParams.INPUT_DATE_FORMATTER);
                     inputCommand.period = period;
                 } catch (DateTimeParseException e) {
                     throw new RuntimeException("Неверный формат введенной даты!\n" +

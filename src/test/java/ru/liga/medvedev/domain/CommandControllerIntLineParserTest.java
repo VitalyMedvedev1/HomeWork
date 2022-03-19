@@ -25,7 +25,7 @@ class CommandControllerIntLineParserTest {
 //        assertEquals("TRY", command.getCurrency());
         assertEquals(command.getListCurrency().get(0), "TRY");
         assertEquals("DATE", command.getPeriod());
-        assertEquals(command.getLocalDate(), LocalDate.parse("22.02.2030", Reference.INPUT_DATE_FORMATTER));
+        assertEquals(command.getLocalDate(), LocalDate.parse("22.02.2030", StaticParams.INPUT_DATE_FORMATTER));
         assertEquals("MOON", command.getAlgorithmName());
         assertEquals("DEFAULT", command.getOutputType());
         command = commandLineParser.createCommand("rate TRY -date 22.02.2030 -alg moon -out list");

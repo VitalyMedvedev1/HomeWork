@@ -10,7 +10,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.liga.medvedev.telegram.bot.command.HelpCommand;
 import ru.liga.medvedev.telegram.bot.command.StartCommand;
-import ru.liga.medvedev.telegram.bot.nonCommand.AnswerMessage;
+import ru.liga.medvedev.telegram.bot.command.StopCommand;
 import ru.liga.medvedev.telegram.bot.nonCommand.NonCommand;
 
 import java.io.ByteArrayInputStream;
@@ -20,21 +20,37 @@ import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 public final class Bot extends TelegramLongPollingCommandBot implements AnswerMessage {
-    private Logger logger = LoggerFactory.getLogger(Bot.class);
     private final String BOT_TOKEN;
     private final String BOT_NAME;
     private final NonCommand nonCommand;
 
     public Bot(String BOT_TOKEN, String BOT_NAME) {
         super();
+        Logger logger = LoggerFactory.getLogger(Bot.class);
         logger.debug("Super constructor was worked");
         this.BOT_TOKEN = BOT_TOKEN;
         this.BOT_NAME = BOT_NAME;
         this.nonCommand = new NonCommand();
 
+        StartCommand startCommand = new StartCommand("start", "Старт");
         register(new StartCommand("start", "Старт"));
 
-        register(new HelpCommand("help", "Помощь"));
+        HelpCommand helpCommand = new HelpCommand("help", "Помощь");
+        register(helpCommand);
+
+        register(new StopCommand("stop", "стоп"));
+
+        registerDefaultAction((absSender, message) -> {
+            SendMessage commandUnknownMessage = new SendMessage();
+            commandUnknownMessage.setChatId(String.valueOf(message.getChatId()));
+            commandUnknownMessage.setText("Команда '" + message.getText() + "' не изместна боту.\nДостпные команды\n/help\n/start\n");
+            try {
+                absSender.execute(commandUnknownMessage);
+            } catch (TelegramApiException e) {
+                e.printStackTrace();
+            }
+            helpCommand.execute(absSender, message.getFrom(), message.getChat(), new String[] {});
+        });
     }
 
     @Override

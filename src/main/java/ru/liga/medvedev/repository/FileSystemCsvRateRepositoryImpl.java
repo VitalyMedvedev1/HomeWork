@@ -3,7 +3,7 @@ package ru.liga.medvedev.repository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.controller.DataRateRepository;
-import ru.liga.medvedev.domain.Reference;
+import ru.liga.medvedev.domain.StaticParams;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -39,8 +39,8 @@ public class FileSystemCsvRateRepositoryImpl implements DataRateRepository, CsvR
         if (fileContent.isEmpty() || fileContent.size() == 1) {
             throw new RuntimeException("В локальном файле нет статистики по введенной валюте");
         }
-        result.add(Arrays.asList(fileContent.get(Reference.HEADER_INDEX).split(DELIMITER)));
-        for (int i = Reference.HEADER_INDEX + 1; i < fileContent.size(); i++) {
+        result.add(Arrays.asList(fileContent.get(StaticParams.HEADER_INDEX).split(DELIMITER)));
+        for (int i = StaticParams.HEADER_INDEX + 1; i < fileContent.size(); i++) {
             result.add(Arrays.asList(fileContent.get(i).split(DELIMITER)));
         }
         log.debug("Конец чтения данных из локального файла по валюте - " + currency);

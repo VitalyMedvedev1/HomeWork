@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.RateStatisticFunctions;
-import ru.liga.medvedev.domain.Reference;
+import ru.liga.medvedev.domain.StaticParams;
 import ru.liga.medvedev.services.RateAlgorithmService;
 import ru.liga.medvedev.services.impl.algorithms.linearregression.LinearRegression;
 
@@ -35,8 +35,8 @@ public class LinearRegressionServiceImpl implements RateAlgorithmService {
         double[] predictVariable = new double[listRate.size()];
         double[] responseVariable = new double[listRate.size()];
         for (int i = 0; i < listRate.size(); i++) {
-            predictVariable[listRate.size() - i - Reference.SECOND_INDEX] = listRate.get(i).getValue();
-            responseVariable[listRate.size() - i - Reference.SECOND_INDEX] = listRate.size() - i;
+            predictVariable[listRate.size() - i - StaticParams.SECOND_INDEX] = listRate.get(i).getValue();
+            responseVariable[listRate.size() - i - StaticParams.SECOND_INDEX] = listRate.size() - i;
         }
         log.debug("Получение линейной функции");
         List<double[]> listArrayRate = Stream.of(predictVariable, responseVariable)
@@ -49,8 +49,8 @@ public class LinearRegressionServiceImpl implements RateAlgorithmService {
         log.debug("Получение стаистики по линейному алгоритму");
         List<Rate> listRate = new ArrayList<>();
         LocalDate localDate = RateStatisticFunctions.getFromWhatDateRate(command);
-        for (int i = 0; i < Reference.COLLECTION_SIZE; i++) {
-            listRate.add(new Rate(currency, localDate.plusDays(i), Precision.round((rateStatisticSize + i - intercept) / slope, Reference.PRECISION)));
+        for (int i = 0; i < StaticParams.COLLECTION_SIZE; i++) {
+            listRate.add(new Rate(currency, localDate.plusDays(i), Precision.round((rateStatisticSize + i - intercept) / slope, StaticParams.PRECISION)));
         }
         log.debug("Стаистика по линейному алгоритму" + listRate);
         return listRate;

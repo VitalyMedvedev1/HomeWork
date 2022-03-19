@@ -14,7 +14,7 @@ public class Rate implements Comparable<Rate> {
 
     @Override
     public String toString() {
-        return Reference.DATE_FORMATTER.format(date).toUpperCase() + " " + value;
+        return StaticParams.DATE_FORMATTER.format(date).toUpperCase() + " " + value;
     }
 
     @Override

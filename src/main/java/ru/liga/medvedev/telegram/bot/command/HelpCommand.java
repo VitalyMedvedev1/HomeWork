@@ -18,7 +18,6 @@ public class HelpCommand extends ServiceCommand {
                 "период - *date/period*\n" +
                 "алгоритмы - *moon/actual/average/liner*\n" +
                 "вывод - *list/graph/...*'\n" +
-                "Пример:\n *rate USD,EUR,BGN -date 17.07.2022 alg liner -output graph*\n" +
-                "Попробуйте ввести снова");
+                "Пример:\n *rate USD,EUR,BGN -date 17.07.2022 alg liner -output graph*\n");
     }
 }

@@ -10,7 +10,6 @@ import java.util.List;
 public class FileSystemCsvRepositoryImplTest {
     FileSystemCsvRateRepositoryImpl fileSystemCsvRepository = new FileSystemCsvRateRepositoryImpl();
 
-
     @Test
     public void test1(){
         Command command = SpringConfiguration.COMMAND_CONTROLLER.getCommand("rate USD -period week -alg moon");

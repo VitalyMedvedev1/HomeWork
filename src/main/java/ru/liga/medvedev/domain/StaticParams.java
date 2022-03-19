@@ -3,7 +3,7 @@ package ru.liga.medvedev.domain;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public final class Reference {
+public final class StaticParams {
     public static final int HEADER_INDEX = 0;
     public static final int SECOND_INDEX = 1;
     public static final DateTimeFormatter DATE_FORMATTER = DateTimeFormatter.ofPattern("E dd.MM.yyyy");

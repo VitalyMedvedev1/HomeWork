@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.RateStatisticFunctions;
-import ru.liga.medvedev.domain.Reference;
+import ru.liga.medvedev.domain.StaticParams;
 import ru.liga.medvedev.services.RateAlgorithmService;
 
 import java.time.LocalDate;
@@ -45,7 +45,7 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
         LocalDate nextFullMoon = moonPhase.getTime().toLocalDate();
         while (nextFullMoon.isBefore(lastDateRate)) {
             moonPhaseDate.add(nextFullMoon);
-            dateMoonPhasePredictStart = nextFullMoon.plusDays(Reference.DAY);
+            dateMoonPhasePredictStart = nextFullMoon.plusDays(StaticParams.DAY);
             moonPhase = parameters.on(dateMoonPhasePredictStart).execute();
             nextFullMoon = moonPhase.getTime().toLocalDate();
         }
@@ -63,14 +63,14 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
                 Precision.round((setRate.stream()
                         .filter(rate -> listMoonPhaseDate.contains(rate.getDate()))
                         .limit(LAST_MOON_PHASE_COUNT)
-                        .mapToDouble(Rate::getValue).sum()) / LAST_MOON_PHASE_COUNT, Reference.PRECISION)));
-        for (int i = 1; i < Reference.COLLECTION_SIZE; i++) {
+                        .mapToDouble(Rate::getValue).sum()) / LAST_MOON_PHASE_COUNT, StaticParams.PRECISION)));
+        for (int i = 1; i < StaticParams.COLLECTION_SIZE; i++) {
             listRate.add(new Rate(
                     currency,
                     localDate.plusDays(i),
                     Precision.round(
                             listRate.getLast().getValue() + listRate.getLast().getValue() * ThreadLocalRandom.current().nextDouble(-CALCULATION_PERCENTAGE, CALCULATION_PERCENTAGE),
-                            Reference.PRECISION)));
+                            StaticParams.PRECISION)));
         }
         log.debug("Спискок статистики по датам полнолуний" + listRate);
         return listRate;

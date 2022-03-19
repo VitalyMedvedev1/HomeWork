@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ru.liga.medvedev.controller.OutRateStatistic;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
-import ru.liga.medvedev.domain.Reference;
+import ru.liga.medvedev.domain.StaticParams;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -22,7 +22,7 @@ public class OutRatesStringServiceImpl implements OutRateStatistic {
         byte[] outMessageByte = null;
         try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
             for (List<Rate> listRate : listRates) {
-                outStream.write(("Статистика по валюте - " + listRate.get(Reference.HEADER_INDEX).getCurrency() + "\n").getBytes(StandardCharsets.UTF_8));
+                outStream.write(("Статистика по валюте - " + listRate.get(StaticParams.HEADER_INDEX).getCurrency() + "\n").getBytes(StandardCharsets.UTF_8));
                 outStream.write(listRate.toString().getBytes(StandardCharsets.UTF_8));
                 outStream.write("\n\n\n".getBytes(StandardCharsets.UTF_8));
             }

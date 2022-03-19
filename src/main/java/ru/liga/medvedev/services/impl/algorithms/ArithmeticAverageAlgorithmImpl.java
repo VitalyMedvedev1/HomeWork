@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.RateStatisticFunctions;
-import ru.liga.medvedev.domain.Reference;
+import ru.liga.medvedev.domain.StaticParams;
 import ru.liga.medvedev.services.RateAlgorithmService;
 
 import java.time.LocalDate;
@@ -31,7 +31,7 @@ public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
             double avgCurs = listRate.stream()
                     .mapToDouble(Rate::getValue)
                     .average().orElse(0);
-            listRate.add(Reference.HEADER_INDEX, new Rate(currency, listRate.get(0).getDate().plusDays(Reference.DAY), Precision.round(avgCurs, Reference.PRECISION)));
+            listRate.add(StaticParams.HEADER_INDEX, new Rate(currency, listRate.get(0).getDate().plusDays(StaticParams.DAY), Precision.round(avgCurs, StaticParams.PRECISION)));
             listRate.remove(listRate.size() - 1);
         }
         log.debug("Конец формирование статистики по среднему алгоритму - " + listRate);

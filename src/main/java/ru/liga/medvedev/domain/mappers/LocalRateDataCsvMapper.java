@@ -3,7 +3,7 @@ package ru.liga.medvedev.domain.mappers;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Rate;
-import ru.liga.medvedev.domain.Reference;
+import ru.liga.medvedev.domain.StaticParams;
 
 import java.text.NumberFormat;
 import java.text.ParseException;
@@ -21,7 +21,7 @@ public class LocalRateDataCsvMapper implements RateDataMapper {
     public List<Rate> mapRate(List<List<String>> listData, String currency) {
         log.debug("Начало мапинга валютной статистики");
         List<Rate> listRates = new ArrayList<>();
-        List<String> headers = listData.get(Reference.HEADER_INDEX);
+        List<String> headers = listData.get(StaticParams.HEADER_INDEX);
         try {
             for (int i = 1; i < listData.size(); i++) {
                 if (headers.size() == listData.get(i).size()) {
@@ -31,7 +31,7 @@ public class LocalRateDataCsvMapper implements RateDataMapper {
                     List<String> listStrRate = listData.get(i);
                     for (int j = 0; j < headers.size(); j++) {
                         if (headers.get(j).replaceAll("\\W", "").equals("data")) {
-                            localDate = LocalDate.parse(listStrRate.get(j), Reference.INPUT_DATE_FORMATTER);
+                            localDate = LocalDate.parse(listStrRate.get(j), StaticParams.INPUT_DATE_FORMATTER);
                         } else if (headers.get(j).equals("curs")) {
                             course = Double.parseDouble(String.valueOf(numberFormat.parse(listStrRate.get(j).replaceAll("\"", ""))));
                         } else if (headers.get(j).equals("nominal")) {

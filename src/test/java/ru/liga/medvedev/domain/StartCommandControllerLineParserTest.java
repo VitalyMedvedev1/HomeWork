@@ -7,7 +7,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class CommandControllerIntLineParserTest {
+class StartCommandControllerLineParserTest {
 
     private Command command = new Command();
     private final CommandLineParser commandLineParser = new CommandLineParser();

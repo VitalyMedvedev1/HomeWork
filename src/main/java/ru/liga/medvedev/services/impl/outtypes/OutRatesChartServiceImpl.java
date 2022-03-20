@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import ru.liga.medvedev.controller.OutRateStatistic;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
+import ru.liga.medvedev.domain.StaticParams;
 
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
@@ -20,10 +21,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service("OutRatesChartService")
-public class OutRatesChartServiceImpl implements OutRateStatistic {
+public class OutRatesChartServiceImpl extends OutRateStatisticService implements OutRateStatistic {
     private final static Map<Integer, Color> mapColor = new HashMap<Integer, Color>() {{
         put(0, Color.BLUE);
         put(1, Color.RED);
@@ -36,8 +38,13 @@ public class OutRatesChartServiceImpl implements OutRateStatistic {
     public byte[] outRateStatistic(Command command, List<List<Rate>> listRates) {
         log.debug("Формирование графика - картинки!!! для валюты");
         TimeSeriesCollection dataSet = new TimeSeriesCollection();
+        int i = OutRatesStatisticLength(command);
         for (List<Rate> listRate : listRates) {
-            dataSet.addSeries(generateTimeSeries(listRate, listRate.get(0).getCurrency()));
+            dataSet.addSeries(generateTimeSeries(
+                    listRate.stream()
+                            .limit(OutRatesStatisticLength(command))
+                            .collect(Collectors.toList()),
+                    listRate.get(0).getCurrency()));
         }
         return generateChart(dataSet, listRates.size());
     }
@@ -69,6 +76,7 @@ public class OutRatesChartServiceImpl implements OutRateStatistic {
             ChartUtils.writeChartAsJPEG(out, chart, 450, 400);
             byteGraph = out.toByteArray();
         } catch (IOException e) {
+            log.error("\"Ошибка сохранения граффика статистики!" + e.getMessage());
             throw new RuntimeException("Ошибка сохранения граффика статистики!");
         }
         log.debug("Конец формирования граффика");

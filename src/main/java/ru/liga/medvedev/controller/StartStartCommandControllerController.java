@@ -13,13 +13,13 @@ import java.util.HashMap;
 
 @Slf4j
 @Component("CommandController")
-public class CommandControllerIntController implements CommandControllerInt {
+public class StartStartCommandControllerController implements StartCommandController {
 
     private final HashMap<String, CommandService> commandServiceHashMap = new HashMap<>();
 
     @Autowired
-    public CommandControllerIntController(@Qualifier("InTelegramBotService") InTelegramBotServiceImpl inTelegramBotService,
-                                          @Qualifier("InConsoleService") InConsoleServiceImpl inConsoleService) {
+    public StartStartCommandControllerController(@Qualifier("InTelegramBotService") InTelegramBotServiceImpl inTelegramBotService,
+                                                 @Qualifier("InConsoleService") InConsoleServiceImpl inConsoleService) {
         commandServiceHashMap.put("BOT", inTelegramBotService);
         commandServiceHashMap.put("CONSOLE", inConsoleService);
     }

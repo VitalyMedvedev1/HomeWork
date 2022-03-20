@@ -14,12 +14,12 @@ import java.util.List;
 
 @Slf4j
 @Service("OutRatesStringService")
-public class OutRatesStringServiceImpl implements OutRateStatistic {
+public class OutRatesStringServiceImpl extends OutRateStatisticService implements OutRateStatistic {
     @Override
     public byte[] outRateStatistic(Command command, List<List<Rate>> listRates) {
         log.debug("Формирование стринги ответа статистики\n" +
                 listRates + "\nна период - " + command.getPeriod());
-        byte[] outMessageByte = null;
+        byte[] outMessageByte;
         try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
             for (List<Rate> listRate : listRates) {
                 outStream.write(("Статистика по валюте - " + listRate.get(StaticParams.HEADER_INDEX).getCurrency() + "\n").getBytes(StandardCharsets.UTF_8));
@@ -28,7 +28,8 @@ public class OutRatesStringServiceImpl implements OutRateStatistic {
             }
             outMessageByte = outStream.toByteArray();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("\"Ошибка сохранения граффика статистики!" + e.getMessage());
+            throw new RuntimeException(e);
         }
         return outMessageByte;
     }

@@ -53,6 +53,7 @@ public class FileSystemCsvRateRepositoryImpl implements DataRateRepository, CsvR
             return bufferedReader.lines()
                     .collect(Collectors.toList());
         } catch (IOException e) {
+            log.error("Ошибка данных из файла:" + e.getMessage());
             throw new UncheckedIOException(e);
         }
     }

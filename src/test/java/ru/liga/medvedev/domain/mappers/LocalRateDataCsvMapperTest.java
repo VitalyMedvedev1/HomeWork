@@ -20,7 +20,7 @@ class LocalRateDataCsvMapperTest {
     private final FileSystemCsvRateRepositoryImpl fileSystemCsvRateRepository = Mockito.mock(FileSystemCsvRateRepositoryImpl.class);
     private final DataRateRateRepositoryController dataRateRateRepositoryController = new DataRateRateRepositoryController(fileSystemCsvRateRepository);
     private final LocalRateDataCsvMapper localRateDataCsvMapper = new LocalRateDataCsvMapper();
-    List<List<String>> listRates = CreateRandomDataListEmulLoad.emulationListFromLocalFile();
+    List<List<String>> listRates = CreateRandomDataListEmulLoad.emulationListRandomDataFromLocalFile();
 
     @Test
     void MappingFromRandomStatisticData() {

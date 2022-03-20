@@ -16,29 +16,30 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component("OutDataRateListService")
-public class OutRatesListServiceImpl implements OutRateStatistic {
+public class OutRatesListServiceImpl extends OutRateStatisticService implements OutRateStatistic {
 
     @Override
     public byte[] outRateStatistic(Command command, List<List<Rate>> listRates) {
         log.debug("Формирование списка ответа статистики\n" +
                 listRates + "\nна период - " + command.getPeriod());
-        String periodStr = command.getPeriod().toUpperCase();
+/*        String periodStr = command.getPeriod().toUpperCase();
         int period = periodStr.equals(String.valueOf(RatePeriods.TOMORROW)) || periodStr.equals(String.valueOf(RatePeriods.DATE)) ? StaticParams.DAY
-                : periodStr.equals(String.valueOf(RatePeriods.WEEK)) ? StaticParams.WEEK : StaticParams.MONTH;
-        byte[] outMessageByte = null;
+                : periodStr.equals(String.valueOf(RatePeriods.WEEK)) ? StaticParams.WEEK : StaticParams.MONTH;*/
+        byte[] outMessageByte;
         try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
             for (List<Rate> listRate : listRates) {
                 outStream.write(("Статистика по валюте - " + listRate.get(StaticParams.HEADER_INDEX).getCurrency() + "\n").getBytes(StandardCharsets.UTF_8));
                 outStream.write(listRate.stream()
-                        .skip(periodStr.equals(RatePeriods.DATE.name()) ? 0 : 1)
-                        .limit(period)
+                        .skip(command.getPeriod().toUpperCase().equals(RatePeriods.DATE.name()) ? 0 : 1)
+                        .limit(OutRatesStatisticLength(command))
                         .map(Rate::toString)
                         .collect(Collectors.joining("\n")).getBytes(StandardCharsets.UTF_8));
                 outStream.write("\n\n\n".getBytes(StandardCharsets.UTF_8));
             }
             outMessageByte = outStream.toByteArray();
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error("\"Ошибка сохранения граффика статистики!" + e.getMessage());
+            throw new RuntimeException(e);
         }
         return outMessageByte;
     }

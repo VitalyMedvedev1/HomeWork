@@ -3,10 +3,12 @@ package ru.liga.medvedev.telegram.bot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
+import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.liga.medvedev.telegram.bot.command.HelpCommand;
 import ru.liga.medvedev.telegram.bot.command.StartCommand;
@@ -17,6 +19,9 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public final class Bot extends TelegramLongPollingCommandBot implements AnswerMessage {
@@ -24,7 +29,7 @@ public final class Bot extends TelegramLongPollingCommandBot implements AnswerMe
     private final String BOT_NAME;
     private final NonCommand nonCommand;
 
-    public Bot(String BOT_TOKEN, String BOT_NAME) {
+    public Bot(String BOT_TOKEN, String BOT_NAME) throws TelegramApiException {
         super();
         Logger logger = LoggerFactory.getLogger(Bot.class);
         logger.debug("Super constructor was worked");
@@ -38,7 +43,12 @@ public final class Bot extends TelegramLongPollingCommandBot implements AnswerMe
         HelpCommand helpCommand = new HelpCommand("help", "Помощь");
         register(helpCommand);
 
-        register(new StopCommand("stop", "стоп"));
+        StopCommand stopCommand = new StopCommand("stop", "стоп");
+        register(stopCommand);
+/*
+        List<BotCommand> commandsList = new ArrayList<>();
+        this.execute(new SetMyCommands(helpCommand));
+*/
 
         registerDefaultAction((absSender, message) -> {
             SendMessage commandUnknownMessage = new SendMessage();
@@ -51,6 +61,7 @@ public final class Bot extends TelegramLongPollingCommandBot implements AnswerMe
             }
             helpCommand.execute(absSender, message.getFrom(), message.getChat(), new String[] {});
         });
+
     }
 
     @Override

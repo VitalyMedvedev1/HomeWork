@@ -3,12 +3,10 @@ package ru.liga.medvedev.telegram.bot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.telegram.telegrambots.extensions.bots.commandbot.TelegramLongPollingCommandBot;
-import org.telegram.telegrambots.meta.api.methods.commands.SetMyCommands;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.methods.send.SendPhoto;
 import org.telegram.telegrambots.meta.api.objects.InputFile;
 import org.telegram.telegrambots.meta.api.objects.Update;
-import org.telegram.telegrambots.meta.api.objects.commands.BotCommand;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.liga.medvedev.telegram.bot.command.HelpCommand;
 import ru.liga.medvedev.telegram.bot.command.StartCommand;
@@ -19,9 +17,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 
 public final class Bot extends TelegramLongPollingCommandBot implements AnswerMessage {
@@ -38,17 +33,11 @@ public final class Bot extends TelegramLongPollingCommandBot implements AnswerMe
         this.nonCommand = new NonCommand();
 
         StartCommand startCommand = new StartCommand("start", "Старт");
-        register(new StartCommand("start", "Старт"));
-
+        register(startCommand);
         HelpCommand helpCommand = new HelpCommand("help", "Помощь");
         register(helpCommand);
-
-        StopCommand stopCommand = new StopCommand("stop", "стоп");
-        register(stopCommand);
-/*
-        List<BotCommand> commandsList = new ArrayList<>();
-        this.execute(new SetMyCommands(helpCommand));
-*/
+//        StopCommand stopCommand = new StopCommand("stop", "стоп");
+        register(new StopCommand("stop", "стоп"));
 
         registerDefaultAction((absSender, message) -> {
             SendMessage commandUnknownMessage = new SendMessage();
@@ -59,9 +48,8 @@ public final class Bot extends TelegramLongPollingCommandBot implements AnswerMe
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
-            helpCommand.execute(absSender, message.getFrom(), message.getChat(), new String[] {});
+            helpCommand.execute(absSender, message.getFrom(), message.getChat(), new String[]{});
         });
-
     }
 
     @Override

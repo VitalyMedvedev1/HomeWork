@@ -5,14 +5,9 @@ import org.springframework.stereotype.Component;
 import ru.liga.medvedev.domain.Rate;
 import ru.liga.medvedev.domain.StaticParams;
 
-import java.io.IOException;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 @Slf4j
 @Component("LocalCsvMapper")

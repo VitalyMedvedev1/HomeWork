@@ -130,6 +130,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-inline</artifactId>
             <version>${mockitoversion}</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

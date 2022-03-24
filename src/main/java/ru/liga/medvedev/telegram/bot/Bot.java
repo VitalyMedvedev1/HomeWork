@@ -32,17 +32,16 @@ public final class Bot extends TelegramLongPollingCommandBot implements AnswerMe
         this.BOT_NAME = BOT_NAME;
         this.nonCommand = new NonCommand();
 
-        StartCommand startCommand = new StartCommand("start", "Старт");
-        register(startCommand);
+        register(new StartCommand("start", "Старт"));
         HelpCommand helpCommand = new HelpCommand("help", "Помощь");
         register(helpCommand);
-//        StopCommand stopCommand = new StopCommand("stop", "стоп");
+
         register(new StopCommand("stop", "стоп"));
 
         registerDefaultAction((absSender, message) -> {
             SendMessage commandUnknownMessage = new SendMessage();
             commandUnknownMessage.setChatId(String.valueOf(message.getChatId()));
-            commandUnknownMessage.setText("Команда '" + message.getText() + "' не изместна боту.\nДостпные команды\n/help\n/start\n");
+            commandUnknownMessage.setText("Команда '" + message.getText() + "' не известна боту.\nДоступные команды\n/help\n/start\n");
             try {
                 absSender.execute(commandUnknownMessage);
             } catch (TelegramApiException e) {

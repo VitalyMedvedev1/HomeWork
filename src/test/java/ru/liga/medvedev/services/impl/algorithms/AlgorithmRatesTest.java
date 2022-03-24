@@ -8,19 +8,15 @@ import ru.liga.medvedev.CreateRandomDataListEmulLoad;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
 
-import javax.validation.constraints.AssertTrue;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
 class AlgorithmRatesTest {
 
     private List<Rate> listRate = new ArrayList<>();
     private List<Rate> newListRate = new ArrayList<>();
-    private Command command = new Command();
+    private final Command command = new Command();
     private final ActualAlgorithmImpl actualAlgorithm = new ActualAlgorithmImpl();
     private final ArithmeticAverageAlgorithmImpl averageAlgorithm = new ArithmeticAverageAlgorithmImpl();
     private final MoonAlgorithmImpl moonAlgorithm = new MoonAlgorithmImpl();

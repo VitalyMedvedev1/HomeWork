@@ -72,7 +72,7 @@ public class MoonAlgorithmImpl implements RateAlgorithmService {
                             listRate.getLast().getValue() + listRate.getLast().getValue() * ThreadLocalRandom.current().nextDouble(-CALCULATION_PERCENTAGE, CALCULATION_PERCENTAGE),
                             StaticParams.PRECISION)));
         }
-        log.debug("Спискок статистики по датам полнолуний" + listRate);
+        log.debug("Спискок статистики по датам полнолуний: {}", listRate);
         return listRate;
     }
 }

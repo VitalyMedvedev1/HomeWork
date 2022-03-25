@@ -33,7 +33,7 @@ public class AlgorithmsRateController implements AlgorithmsRate {
 
     @Override
     public List<Rate> generateStatisticRateCurrency(List<Rate> listRate, Command command) {
-        log.info("Начачало работы расчета статистики, алгоритм: " + command.getAlgorithmName());
+        log.info("Начачало работы расчета статистики по алгоритму: {}", command.getAlgorithmName());
         return algorithmServiceHashMap.get(command.getAlgorithmName()).generateStatisticRateCurrency(listRate, command);
     }
 }

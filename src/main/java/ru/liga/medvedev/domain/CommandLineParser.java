@@ -12,7 +12,7 @@ public class CommandLineParser {
     private static final int COMMAND_ALGORITHM_INDEX = 5;
 
     public Command createCommand(String commandInputStr) {
-        log.debug("Парсинг и создание команды из строки");
+        log.debug("Парсинг и создание команды из строки: {}", commandInputStr);
         String[] commandLineParts = commandInputStr.trim().split(COMMAND_SPLITTER);
         try {
             return new Command.Builder()

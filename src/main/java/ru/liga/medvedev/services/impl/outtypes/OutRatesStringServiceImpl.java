@@ -17,8 +17,7 @@ import java.util.List;
 public class OutRatesStringServiceImpl extends OutRateStatisticService implements OutRateStatistic {
     @Override
     public byte[] outRateStatistic(Command command, List<List<Rate>> listRates) {
-        log.debug("Формирование стринги ответа статистики\n" +
-                listRates + "\nна период - " + command.getPeriod());
+        log.debug("Формирование списка ответа статистики\n {} \nна период - {}", listRates, command.getPeriod());
         byte[] outMessageByte;
         try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
             for (List<Rate> listRate : listRates) {
@@ -28,7 +27,7 @@ public class OutRatesStringServiceImpl extends OutRateStatisticService implement
             }
             outMessageByte = outStream.toByteArray();
         } catch (IOException e) {
-            log.error("\"Ошибка сохранения граффика статистики!" + e.getMessage());
+            log.error("\"Ошибка сохранения граффика статистики! {}", e.getMessage());
             throw new RuntimeException(e);
         }
         return outMessageByte;

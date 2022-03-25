@@ -31,7 +31,7 @@ public class OutRateStatisticController implements OutRateStatistic {
 
     @Override
     public byte[] outRateStatistic(Command command, List<List<Rate>> listRates) {
-        log.info("Начало обработки данных статистики для ответа: " + command.getOutputType());
+        log.info("Начало обработки данных статистики для ответа с типом: {}", command.getOutputType());
         return outRateStatisticMap.get(command.getOutputType()).outRateStatistic(command, listRates);
     }
 }

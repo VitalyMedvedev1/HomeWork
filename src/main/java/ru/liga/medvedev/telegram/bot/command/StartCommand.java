@@ -1,14 +1,12 @@
 package ru.liga.medvedev.telegram.bot.command;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.telegram.telegrambots.meta.api.objects.Chat;
 import org.telegram.telegrambots.meta.api.objects.User;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 
+@Slf4j
 public class StartCommand extends ServiceCommand {
-
-    private final Logger logger = LoggerFactory.getLogger(StartCommand.class);
 
     public StartCommand(String identifier, String description) {
         super(identifier, description);
@@ -16,7 +14,7 @@ public class StartCommand extends ServiceCommand {
 
     @Override
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
-        logger.info("Обработка команды " + this.getCommandIdentifier());
+        log.info("Обработка команды: {}", this.getCommandIdentifier());
         sendAnswer(absSender, chat.getId(), "Давайте начнём! Если Вам нужна помощь, нажмите \n/help \n/start\n/stop");
     }
 }

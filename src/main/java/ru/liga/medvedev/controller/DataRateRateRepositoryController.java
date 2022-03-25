@@ -19,7 +19,7 @@ public class DataRateRateRepositoryController implements DataRateRepository {
 
     @Override
     public List<List<String>> getRateDataRepository(String currency) {
-        log.info("Начало загрузки данных из репозитория: " + dataRateRepository.getClass());
+        log.info("Начало загрузки данных из репозитория: {}", dataRateRepository.getClass());
         return dataRateRepository.getRateDataRepository(currency);
     }
 }

@@ -34,7 +34,7 @@ public class ArithmeticAverageAlgorithmImpl implements RateAlgorithmService {
             listRate.add(StaticParams.HEADER_INDEX, new Rate(currency, listRate.get(0).getDate().plusDays(StaticParams.DAY), Precision.round(avgCurs, StaticParams.PRECISION)));
             listRate.remove(listRate.size() - 1);
         }
-        log.debug("Конец формирование статистики по среднему алгоритму - " + listRate);
+        log.debug("Конец формирование статистики по среднему алгоритму: {}", listRate);
         return listRate.stream()
                 .sorted(Comparator.comparing(Rate::getDate))
                 .collect(Collectors.toList());

@@ -22,7 +22,6 @@ public class Command {
     private static final int COMMAND_LENGTH_MAX = 8;
     private static final int COMMAND_OUT_TYPE_INDEX = 7;
 
-    private final String inCommand = "RATE";
     private String currency;
     private List<String> listCurrency = new ArrayList<>();
     private String period;
@@ -40,9 +39,9 @@ public class Command {
         }
 
         @Override
-        public Builder validationLength(int commandLength, String rateCommand) throws RuntimeException {
-            if (!((commandLength == COMMAND_LENGTH || commandLength == COMMAND_LENGTH_MAX) && rateCommand.equalsIgnoreCase(inputCommand.getInCommand()))) {
-                throw new RuntimeException(StaticParams.ERROR_LENGTH_MESSAGE);
+        public Builder validationLength(int commandLength, String rateCommand) throws IllegalArgumentException {
+            if (!((commandLength == COMMAND_LENGTH || commandLength == COMMAND_LENGTH_MAX) && rateCommand.equalsIgnoreCase(StaticParams.IN_COMMAND))) {
+                throw new IllegalArgumentException(StaticParams.ERROR_LENGTH_MESSAGE);
             }
             return this;
         }
@@ -52,7 +51,7 @@ public class Command {
             Arrays.stream(currency.split(COMMAND_PATH_SPLITTER))
                     .forEach(c -> {
                         if (equalsInEnum(c, RateCurrencies.class)) {
-                            throw new RuntimeException(StaticParams.ERROR_CURRENCY_MESSAGE);
+                            throw new IllegalArgumentException(StaticParams.ERROR_CURRENCY_MESSAGE);
                         } else {
                             inputCommand.getListCurrency().add(c);
                         }
@@ -65,7 +64,7 @@ public class Command {
             if (commandLineParts.length == COMMAND_LENGTH_MAX) {
                 String outType = commandLineParts[COMMAND_OUT_TYPE_INDEX].toUpperCase();
                 if (equalsInEnum(outType.toUpperCase(), RateOutTypes.class)) {
-                    throw new RuntimeException(StaticParams.ERROR_OUT_TYPE_MESSAGE);
+                    throw new IllegalArgumentException(StaticParams.ERROR_OUT_TYPE_MESSAGE);
                 } else {
                     inputCommand.outputType = outType;
                 }
@@ -78,7 +77,7 @@ public class Command {
         @Override
         public Builder validationAlgorithmName(String algorithmName) {
             if (equalsInEnum(algorithmName.toUpperCase(), RateAlgorithms.class)) {
-                throw new RuntimeException(StaticParams.ERROR_ALGORITHM_MESSAGE);
+                throw new IllegalArgumentException(StaticParams.ERROR_ALGORITHM_MESSAGE);
             } else {
                 inputCommand.algorithmName = algorithmName;
             }
@@ -92,12 +91,12 @@ public class Command {
                     inputCommand.localDate = LocalDate.parse(date, StaticParams.INPUT_DATE_FORMATTER);
                     inputCommand.period = period;
                 } catch (DateTimeParseException e) {
-                    throw new RuntimeException(StaticParams.ERROR_DATE_FORMAT_MESSAGE);
+                    throw new IllegalArgumentException(StaticParams.ERROR_DATE_FORMAT_MESSAGE);
                 }
             } else {
                 period = date;
                 if (equalsInEnum(period.toUpperCase(), RatePeriods.class)) {
-                    throw new RuntimeException(StaticParams.ERROR_PERIOD_MESSAGE);
+                    throw new IllegalArgumentException(StaticParams.ERROR_PERIOD_MESSAGE);
                 } else {
                     inputCommand.period = period;
                 }

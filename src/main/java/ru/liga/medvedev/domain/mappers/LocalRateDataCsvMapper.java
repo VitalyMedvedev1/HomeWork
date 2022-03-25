@@ -15,7 +15,7 @@ public class LocalRateDataCsvMapper implements RateDataMapper {
 
     @Override
     public List<Rate> mapRate(List<List<String>> listData, String currency) {
-        log.debug("Начало мапинга валютной статистики");
+        log.debug("Начало маппинга валютной статистики");
         List<Rate> listRates = new ArrayList<>();
         List<String> headers = listData.get(StaticParams.HEADER_INDEX);
         for (int i = 1; i < listData.size(); i++) {
@@ -36,7 +36,7 @@ public class LocalRateDataCsvMapper implements RateDataMapper {
                 listRates.add(new Rate(currency, localDate, course / nominal));
             }
         }
-        log.debug("Конец мапинга валютной статистики");
+        log.debug("Конец маппинга валютной статистики");
         return listRates;
     }
 }

@@ -18,7 +18,7 @@ public class StopCommand extends ServiceCommand {
     public void execute(AbsSender absSender, User user, Chat chat, String[] strings) {
         log.info("Передана команда на завершение");
         sendAnswer(absSender, chat.getId(), STOP_MESSAGE);
-        System.exit(0);
+        //System.exit(0); ))))))))))
     }
 }
 

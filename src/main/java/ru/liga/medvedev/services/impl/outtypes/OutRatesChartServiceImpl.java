@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 import ru.liga.medvedev.controller.OutRateStatistic;
 import ru.liga.medvedev.domain.Command;
 import ru.liga.medvedev.domain.Rate;
-import ru.liga.medvedev.domain.StaticParams;
 
 import java.awt.*;
 import java.io.ByteArrayOutputStream;
@@ -50,8 +49,7 @@ public class OutRatesChartServiceImpl extends OutRateStatisticService implements
     }
 
     public TimeSeries generateTimeSeries(List<Rate> listRates, String currency) {
-        log.debug("Формирование графика для валюты - " + currency +
-                "\nПо статистики" + listRates);
+        log.debug("Формирование графика для валюты: {} По статистики: {}", currency, listRates);
         TimeSeries timeSeries = new TimeSeries(currency);
         listRates
                 .forEach(rate ->
@@ -76,7 +74,7 @@ public class OutRatesChartServiceImpl extends OutRateStatisticService implements
             ChartUtils.writeChartAsJPEG(out, chart, 450, 400);
             byteGraph = out.toByteArray();
         } catch (IOException e) {
-            log.error("\"Ошибка сохранения граффика статистики!" + e.getMessage());
+            log.error("\"Ошибка сохранения граффика статистики! {}", e.getMessage());
             throw new RuntimeException("Ошибка сохранения граффика статистики!");
         }
         log.debug("Конец формирования граффика");

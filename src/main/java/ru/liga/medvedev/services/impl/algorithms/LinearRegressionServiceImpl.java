@@ -52,7 +52,7 @@ public class LinearRegressionServiceImpl implements RateAlgorithmService {
         for (int i = 0; i < StaticParams.COLLECTION_SIZE; i++) {
             listRate.add(new Rate(currency, localDate.plusDays(i), Precision.round((rateStatisticSize + i - intercept) / slope, StaticParams.PRECISION)));
         }
-        log.debug("Стаистика по линейному алгоритму" + listRate);
+        log.debug("Стаистика по линейному алгоритму: {}", listRate);
         return listRate;
     }
 }

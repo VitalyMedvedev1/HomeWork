@@ -17,10 +17,10 @@ public class NonCommand {
     private final Logger logger = LoggerFactory.getLogger(NonCommand.class);
 
     public Map<byte[], Boolean> nonCommandExecute(String messageText) {
-        logger.info("Строка команды от бота\n" + messageText);
+        logger.info("Строка команды от бота\n {}", messageText);
 
         Command command = SpringConfiguration.COMMAND_CONTROLLER.getCommand(messageText);
-        logger.info("Обработанная команда\n" + command);
+        logger.info("Обработанная команда\n {}", command);
 
         Map<byte[], Boolean> outMapMessage = new HashMap<>();
         List<List<Rate>> listRates = new ArrayList<>();

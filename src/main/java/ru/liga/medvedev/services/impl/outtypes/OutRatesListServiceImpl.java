@@ -20,11 +20,7 @@ public class OutRatesListServiceImpl extends OutRateStatisticService implements 
 
     @Override
     public byte[] outRateStatistic(Command command, List<List<Rate>> listRates) {
-        log.debug("Формирование списка ответа статистики\n" +
-                listRates + "\nна период - " + command.getPeriod());
-/*        String periodStr = command.getPeriod().toUpperCase();
-        int period = periodStr.equals(String.valueOf(RatePeriods.TOMORROW)) || periodStr.equals(String.valueOf(RatePeriods.DATE)) ? StaticParams.DAY
-                : periodStr.equals(String.valueOf(RatePeriods.WEEK)) ? StaticParams.WEEK : StaticParams.MONTH;*/
+        log.debug("Формирование списка ответа статистики\n {} \nна период - {}", listRates, command.getPeriod());
         byte[] outMessageByte;
         try (ByteArrayOutputStream outStream = new ByteArrayOutputStream()) {
             for (List<Rate> listRate : listRates) {
@@ -38,7 +34,7 @@ public class OutRatesListServiceImpl extends OutRateStatisticService implements 
             }
             outMessageByte = outStream.toByteArray();
         } catch (IOException e) {
-            log.error("\"Ошибка сохранения граффика статистики!" + e.getMessage());
+            log.error("\"Ошибка сохранения граффика статистики! {}", e.getMessage());
             throw new RuntimeException(e);
         }
         return outMessageByte;

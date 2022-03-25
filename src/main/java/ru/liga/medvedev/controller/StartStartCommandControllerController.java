@@ -31,7 +31,7 @@ public class StartStartCommandControllerController implements StartCommandContro
 
     @Override
     public Command getCommand(String text) {
-        log.info("Начало обработки команды для работы: " + text);
+        log.info("Начало обработки команды: {}", text);
         return commandServiceHashMap.get("BOT").getCommands(text);
     }
 }

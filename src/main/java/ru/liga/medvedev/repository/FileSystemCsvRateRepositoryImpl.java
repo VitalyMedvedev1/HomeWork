@@ -29,7 +29,7 @@ public class FileSystemCsvRateRepositoryImpl implements DataRateRepository, CsvR
 
     @Override
     public List<List<String>> ReadLocalCsv(String currency) {
-        log.debug("Начало чтения данных из локального файла по валюте - " + currency);
+        log.debug("Начало чтения данных из локального файла по валюте: {}", currency);
         URL url = getClass().getClassLoader().getResource(currency + "_NEW" + EXTENSION);//!!!!!!!!!!!!!!!!!!!!!!!!!
         if (url == null) {
             throw new RuntimeException("Файл не найден");
@@ -43,7 +43,7 @@ public class FileSystemCsvRateRepositoryImpl implements DataRateRepository, CsvR
         for (int i = StaticParams.HEADER_INDEX + 1; i < fileContent.size(); i++) {
             result.add(Arrays.asList(fileContent.get(i).split(DELIMITER)));
         }
-        log.debug("Конец чтения данных из локального файла по валюте - " + currency);
+        log.debug("Конец чтения данных из локального файла по валюте: {}", currency);
         return result;
     }
 
@@ -53,7 +53,7 @@ public class FileSystemCsvRateRepositoryImpl implements DataRateRepository, CsvR
             return bufferedReader.lines()
                     .collect(Collectors.toList());
         } catch (IOException e) {
-            log.error("Ошибка данных из файла:" + e.getMessage());
+            log.error("Ошибка данных из файла: {}", e.getMessage());
             throw new UncheckedIOException(e);
         }
     }

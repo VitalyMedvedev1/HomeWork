@@ -38,7 +38,7 @@ public class ActualAlgorithmImpl implements RateAlgorithmService {
             newRateStatistic.add(new Rate(currency, localDate, Precision.round(avgCourse, StaticParams.PRECISION)));
             localDate = localDate.plusDays(StaticParams.DAY);
         }
-        log.debug("Конец формирование статистики по актуальному алгоритму" + newRateStatistic);
+        log.debug("Конец формирование статистики по актуальному алгоритму: {}", newRateStatistic);
         return new ArrayList<>(newRateStatistic).stream()
                 .sorted(Comparator.comparing(Rate::getDate))
                 .collect(Collectors.toList());

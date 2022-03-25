@@ -18,7 +18,7 @@ public class InTelegramBotServiceImpl implements CommandService {
 
     @Override
     public Command getCommands(String text) {
-        log.debug("Начало обработки команды от телеграм бота" + text);
+        log.debug("Начало обработки команды от телеграм бота: {}", text);
         return StaticParams.COMMAND_LINE_PARSER.createCommand(text);
     }
 }

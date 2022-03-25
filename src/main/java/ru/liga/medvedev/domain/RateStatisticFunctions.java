@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 public class RateStatisticFunctions {
 
     public static List<Rate> sortedRateList(List<Rate> listRate) {
-        log.debug("Сортировка статистики - " + listRate);
+        log.debug("Сортировка статистики: {}", listRate);
         return listRate.stream()
                 .sorted(Comparator.comparing(Rate::getDate).reversed())
                 .limit(StaticParams.COLLECTION_SIZE)
